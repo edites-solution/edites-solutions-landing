@@ -241,10 +241,16 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 90%;
             margin: 0 auto;
             padding: 0 2rem;
         }
+        .sub-container {
+            max-width: inherit;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
 
         .section-header {
             text-align: left;
@@ -423,6 +429,7 @@
         .products-carousel {
             position: relative;
             overflow: hidden;
+            padding:5px;
         }
 
         .products-slide {
@@ -433,8 +440,8 @@
             transition: opacity 0.5s ease-in-out;
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: 7.5%;
+            width: 85%;
         }
 
         .products-slide.active {
@@ -462,11 +469,15 @@
             background: #667eea;
         }
 
+        .carousel-arrow:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
         .carousel-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
             width: 40px;
@@ -481,16 +492,12 @@
             z-index: 10;
         }
 
-        .carousel-arrow:hover {
-            background: rgba(0,0,0,0.9);
-        }
-
         .carousel-arrow.prev {
-            left: -20px;
+            left: 10px; /* Mueve la flecha izquierda más cerca del borde del contenedor */
         }
 
         .carousel-arrow.next {
-            right: -20px;
+            right: 10px; /* Mueve la flecha derecha más cerca del borde del contenedor */
         }
 
         .product-content {
@@ -530,9 +537,9 @@
 
         .product-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            margin-top: 1rem;
+            margin: 10px
         }
 
         .sector-badge {
@@ -687,6 +694,9 @@
         .footer-section a:hover {
             color: #ffd43b;
         }
+        .product-description{
+            height:200px;
+        }
 
         .footer-bottom {
             text-align: center;
@@ -822,12 +832,15 @@
                     <div class="pill">Software</div>
                     <div class="pill">Hardware</div>
                     <div class="pill">Medical Devices</div>
-                    <div class="pill">Consulting</div>
+                    <div class="pill">Engineering Consulting</div>
+                    <div class="pill">Startup Consulting</div>
                     <div class="pill">Electronics</div>
                     <div class="pill">AI</div>
                     <div class="pill">IoT</div>
                     <div class="pill">Robotics</div>
                     <div class="pill">Electric Mobility</div>
+                    <div class="pill">Market Research</div>
+                    <div class="pill">Special Developments</div>
                 </div>
             </div>
         </div>
@@ -840,7 +853,9 @@
                 <h2>Our Creations</h2>
                 <p>Innovative solutions that drive results</p>
             </div>
-            <div class="products-carousel">
+            <div class="sub-container">
+                <div class="products-carousel">
+                    <button class="carousel-arrow prev" onclick="changeProductsSlide(-1)">‹</button>
                 <div class="products-slide active">
                     <div class="product-card">
                         <div class="product-image quantum-leap"></div>
@@ -889,27 +904,34 @@
                         <div class="product-image quantum-leap"></div>
                         <div class="product-content">
                             <h3>Future Product 1</h3>
-                            <p>Coming soon...</p>
-                            <div class="product-actions">
+                            <div class="product-description">
+                                <p>"Realizamos un análisis integral para una empresa española, evaluando mercado, competencia, legislación y políticas en Latinoamérica, impulsando su estrategia de expansión."  </p>
+                            </div>
+                            
+                        </div>
+                         <div class="product-actions">
                                 <a href="#contact" class="buy-btn">Get it</a>
                                 <div class="sector-badge">
                                     <em>Sector: Medical Devices</em>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image circuit-master"></div>
                         <div class="product-content">
                             <h3>Future Product 2</h3>
+                             <div class="product-description">
+
                             <p>Coming soon...</p>
-                            <div class="product-actions">
+                             </div>
+                            
+                        </div>
+                        <div class="product-actions">
                                 <a href="#contact" class="buy-btn">Get it</a>
                                 <div class="sector-badge">
                                     <em>Sector: Medical Devices</em>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image code-weaver"></div>
@@ -925,19 +947,15 @@
                         </div>
                     </div>
                 </div>
-                
-                <button class="carousel-arrow prev" onclick="changeProductsSlide(-1)">‹</button>
-                <button class="carousel-arrow next" onclick="changeProductsSlide(1)">›</button>
-                
+                    <button class="carousel-arrow next" onclick="changeProductsSlide(1)">›</button>
+                </div>
                 <div class="carousel-nav">
                     <div class="carousel-dot active" onclick="goToProductsSlide(0)"></div>
                     <div class="carousel-dot" onclick="goToProductsSlide(1)"></div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Stats Section -->
+    </section>    <!-- Stats Section -->
     <section class="stats">
         <div class="container">
             <div class="stats-grid">
