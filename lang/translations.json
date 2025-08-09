@@ -70,7 +70,15 @@
     "footer.place": "Our Lair",
     "footer.phone": "The Batphone",
     "footer.services": "Services",
-    "common.getIt": "Get it"
+    "common.getIt": "Get it",
+    "sector.label": "Sector: ",
+    "sector.medical": "Medical Devices",
+    "sector.software": "Software",
+    "sector.iot": "IoT",
+    "sector.research": "Market Research",
+    "sector.startup": "Startup consulting",
+    "sector.hardware": "Hardware",
+    "sector.automation": "Automation"
   },
   "es": {
     "nav.about": "Sobre nosotros",
@@ -143,6 +151,14 @@
     "footer.place": "Nuestras sedes",
     "footer.phone": "Teléfonos",
     "footer.services": "Servicios",
-    "common.getIt": "Obtener"
+    "common.getIt": "Obtener",
+    "sector.label": "Sector: ",
+    "sector.medical": "Dispositivos médicos",
+    "sector.software": "Software",
+    "sector.iot": "IoT",
+    "sector.research": "Investigación de mercado",
+    "sector.startup": "Consultoría para startups",
+    "sector.hardware": "Hardware",
+    "sector.automation": "Automatización"
   }
 }

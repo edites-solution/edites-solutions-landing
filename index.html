@@ -202,7 +202,7 @@
         }
 
         .hero h1 {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             margin-bottom: 1rem;
             font-weight: 400;
             text-transform: uppercase;
@@ -210,14 +210,14 @@
         }
 
         .hero h2 {
-            font-size: 4rem;
+            font-size: clamp(2rem, 6vw, 3.5rem);
             margin-bottom: 2rem;
             font-weight: 700;
             line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
             margin-bottom: 2rem;
             opacity: 0.9;
             max-width: 600px;
@@ -253,6 +253,9 @@
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary:hover, .btn-secondary:hover {
@@ -281,7 +284,7 @@
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.6rem, 5.5vw, 2.5rem);
             margin-bottom: 1rem;
             color: #333;
         }
@@ -538,7 +541,7 @@
         }
 
         .product-content h3 {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 4.5vw, 1.5rem);
             margin-bottom: 1rem;
         }
 
@@ -740,7 +743,7 @@
         @media (max-width: 992px) {
             .services-content { grid-template-columns: 1fr; }
             .services-pills { grid-template-columns: repeat(2, 1fr); }
-            .products-slide { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+            .products-slide { grid-template-columns: 1fr; }
             .carousel-arrow.prev { left: 0; }
             .carousel-arrow.next { right: 0; }
             .mobile-menu-btn { display: inline-flex; }
@@ -751,13 +754,8 @@
                 display: none;
             }
 
-            .hero h1 {
-                font-size: 1rem;
-            }
-
-            .hero h2 {
-                font-size: 2rem;
-            }
+            .hero { text-align: center; }
+            .hero p { max-width: 100%; margin-left: auto; margin-right: auto; }
 
             .hero-buttons {
                 flex-direction: column;
@@ -771,6 +769,53 @@
             }
             .products-slide { grid-template-columns: 1fr; }
             .carousel-arrow { display: none; }
+
+            /* About: video first, full width; center text */
+            .about-content { display: flex; flex-direction: column; gap: 1.25rem; }
+            .video-container { order: -1; width: 100%; margin: 0 auto; }
+            .about-text { text-align: center; }
+            .about-text p { text-align: center; }
+
+            /* Reduce vertical whitespace across sections */
+            .about-us,
+            .services,
+            .products,
+            .stats,
+            .testimonials,
+            .contact { padding: 40px 0; }
+
+            /* Stack section headers and remove right arrow in mobile */
+            .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; text-align: left; margin-bottom: 1.5rem; }
+            .section-header .arrow { display: none; }
+
+            /* Center the learn-more link */
+            .learn-more { justify-content: center; }
+
+            /* Footer: stack and center */
+            footer .footer-content { grid-template-columns: 1fr; text-align: center; }
+            footer .footer-section { align-items: center; }
+            footer .footer-section a, 
+            footer .footer-section p { margin-left: auto; margin-right: auto; }
+            footer .footer-section img { display: block; margin: 0 auto; }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            :root { 
+                --header-height: 60px; 
+                --page-side-pad: 0.75rem;
+            }
+            .hero { padding: 56px 0 56px; }
+            .hero-content { padding: 0 var(--page-side-pad); }
+            .btn-primary, .btn-secondary { padding: 0.9rem 1.25rem; }
+            .hero-buttons a { width: 100%; justify-content: center; }
+            .services-pills { grid-template-columns: 1fr; }
+            .about-text h2 { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+            .container { padding: 0 var(--page-side-pad); }
+
+            /* Contact header: stack title then subtitle */
+            #contact .section-header { flex-direction: column; align-items: flex-start; text-align: left; gap: 0.5rem; }
+            #contact .section-header p { margin: 0; }
         }
 
         /* Mobile nav overlay */
@@ -960,7 +1005,7 @@
                                     <div class="product-actions">
                                         <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
                                         <div class="sector-badge">
-                                            <em>Sector: Medical Devices</em>
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
                                         </div>
                                     </div>
                                 </div>
@@ -973,7 +1018,7 @@
                                     <div class="product-actions">
                                         <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
                                         <div class="sector-badge">
-                                            <em>Sector: Medical Devices</em>
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
                                         </div>
                                     </div>
                                 </div>
@@ -986,7 +1031,7 @@
                                     <div class="product-actions">
                                         <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
                                         <div class="sector-badge">
-                                            <em>Sector: Medical Devices</em>
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
                                         </div>
                                     </div>
                                 </div>
@@ -1119,9 +1164,9 @@
                                     <h3 data-i18n="product12.title">Industrial Automation with PLC</h3>
                                     <p data-i18n="product12.desc">We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.</p>
                                     <div class="product-actions">
-                                        <a href="#contact" class="buy-btn">Get it</a>
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
                                         <div class="sector-badge">
-                                            <em>Sector: Automation</em>
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.automation">Automation</span></em>
                                         </div>
                                     </div>
                                 </div>
@@ -1139,15 +1184,15 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <h3>+14</h3>
-                    <p>Years of experience</p>
+                    <p data-i18n="stats.years">Years of experience</p>
                 </div>
                 <div class="stat-item">
                     <h3>+100</h3>
-                    <p>Projects</p>
+                    <p data-i18n="stats.projects">Projects</p>
                 </div>
                 <div class="stat-item">
                     <h3>+30</h3>
-                    <p>Innovation awards</p>
+                    <p data-i18n="stats.awards">Innovation awards</p>
                 </div>
             </div>
         </div>
@@ -1253,6 +1298,174 @@
     </footer>
 
     <script>
+    // Inline translations to work without a server (file://). Fetch will be used only as a fallback.
+    window.TRANSLATIONS = {
+      "en": {
+        "nav.about": "About Us",
+        "nav.services": "Services",
+        "nav.projects": "Projects",
+        "nav.contact": "Contact",
+        "hero.kicker": "Future Forward",
+        "hero.title": "Engineering Your Tomorrow",
+        "hero.subtitle": "We build the brains and brawn for your next big idea. From circuits to code, we make it happen.",
+        "hero.ctaPrimary": "Start Now",
+        "hero.ctaSecondary": "Learn More",
+        "about.title": "About Edites Solutions",
+        "about.p1": "We are a passionate team of engineers and innovators transforming bold ideas into cutting-edge solutions. From revolutionary medical products to global engineering services, we combine precision, creativity, and technical excellence to design projects that make a lasting impact.",
+        "about.p2_html": "Our story began with <a href=\"https://www.siruom.com/home\" target=\"_blank\">Siruom</a>, a wheelchair internationally recognized as one of the most innovative in its category. That achievement led us, in 2019, to earn the support of Toyota Motor Corporation. With their backing, we redesigned <a href=\"https://www.siruom.com/home\" target=\"_blank\">Siruom</a>, optimized our processes, built a new factory, and adopted the Kaizen philosophy. We merged this discipline of continuous improvement with rigorous medical-grade quality standards to deliver excellence in every project.",
+        "about.p3": "Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.",
+        "about.learnMoreSiruom": "Learn More About Siruom",
+        "services.title": "Smart Solutions",
+        "services.text_html": "Our mission is clear: to bridge the gap between imagination and reality, delivering solutions that exceed expectations and create real value.<br/><br/>We craft custom software, design killer hardware, and offer consulting focused on real outcomes. Clear. Effective. Impactful.",
+        "services.contact": "Contact Us",
+        "pills.software": "Software",
+        "pills.hardware": "Hardware",
+        "pills.medical": "Medical Devices",
+        "pills.consulting": "Engineering Consulting",
+        "pills.startup": "Startup Consulting",
+        "pills.electronics": "Electronics",
+        "pills.ai": "AI",
+        "pills.iot": "IoT",
+        "pills.robotics": "Robotics",
+        "pills.electric": "Electric Mobility",
+        "pills.research": "Market Research",
+        "pills.special": "Special Developments",
+        "products.title": "Our Creations",
+        "products.subtitle": "Innovative solutions that drive results",
+        "product1.title": "Siruom WABI",
+        "product1.desc": "We create Siruom, a cutting-edge omnidirectional wheelchair, offering advanced mobility, comfort, and innovative technology to improve quality of life.",
+        "product2.title": "Siruom Protect",
+        "product2.desc": "We developed an autonomous disinfection system for intensive care units, ensuring sterile and safe environments with advanced technology.",
+        "product3.title": "Neumoc-1000TI",
+        "product3.desc": "We manufactured an intensive care ventilator, strengthening the medical response with advanced technology during the COVID-19 pandemic.",
+        "product4.title": "Custom Industrial Software",
+        "product4.desc": "We develop software with databases, advanced analytics, and visualization screens, optimizing management and monitoring in industries.",
+        "product5.title": "IoT Automation in Winery",
+        "product5.desc": "We implemented an IoT system to automate pumps in wine production at a premium winery located in Patagonia, optimizing processes and improving product quality.",
+        "product6.title": "Electric Vehicle Market Study",
+        "product6.desc": "We conducted a comprehensive analysis for a Spanish company, evaluating the market, competition, legislation, and policies in Latin America, promoting its expansion strategy.",
+        "product7.title": "Consulting for Startups",
+        "product7.desc": "We provide comprehensive evaluation, strategic roadmaps, business plans, and investment decks, driving the growth and financing of innovative startups in different sectors.",
+        "product8.title": "Electric Dolly for Production",
+        "product8.desc": "We manufacture an electric dolly to optimize production line feeding, improving efficiency and fluidity in industrial processes.",
+        "product9.title": "Special Thermoformed Parts",
+        "product9.desc": "We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.",
+        "product10.title": "Jigs and Dies for Production",
+        "product10.desc": "We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.",
+        "product11.title": "Disinfection System - Petrochemical Industry",
+        "product11.desc": "We designed and manufactured a specialized disinfection system for a petrochemical company, ensuring safety and efficiency in its industrial processes.",
+        "product12.title": "Industrial Automation with PLC",
+        "product12.desc": "We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.",
+        "stats.years": "Years of experience",
+        "stats.projects": "Projects",
+        "stats.awards": "Innovation awards",
+        "testimonials.title": "What Our Clients Say",
+        "testimonials.subtitle": "Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.",
+        "contact.title": "Let's Build Something Awesome",
+        "contact.subtitle": "Ready to start your next project? Get in touch with us today.",
+        "contact.name": "Your Name",
+        "contact.email": "Your Email",
+        "contact.company": "Company Name",
+        "contact.message": "Message",
+        "contact.submit": "Send It!",
+        "footer.place": "Our Lair",
+        "footer.phone": "The Batphone",
+        "footer.services": "Services",
+        "common.getIt": "Get it",
+        "sector.label": "Sector: ",
+        "sector.medical": "Medical Devices",
+        "sector.software": "Software",
+        "sector.iot": "IoT",
+        "sector.research": "Market Research",
+        "sector.startup": "Startup consulting",
+        "sector.hardware": "Hardware",
+        "sector.automation": "Automation"
+      },
+      "es": {
+        "nav.about": "Sobre nosotros",
+        "nav.services": "Servicios",
+        "nav.projects": "Proyectos",
+        "nav.contact": "Contacto",
+        "hero.kicker": "Hacia el futuro",
+        "hero.title": "Ingeniería para tu mañana",
+        "hero.subtitle": "Construimos el cerebro y la fuerza de tu próxima gran idea. Desde circuitos hasta código, lo hacemos realidad.",
+        "hero.ctaPrimary": "Comenzar",
+        "hero.ctaSecondary": "Conocer más",
+        "about.title": "Sobre Edites Solutions",
+        "about.p1": "Somos un equipo apasionado de ingenieros e innovadores que transformamos ideas audaces en soluciones de vanguardia. Desde productos médicos revolucionarios hasta servicios de ingeniería globales, combinamos precisión, creatividad y excelencia técnica para diseñar proyectos con impacto real.",
+        "about.p2_html": "Nuestra historia comenzó con <a href=\"https://www.siruom.com/home\" target=\"_blank\">Siruom</a>, una silla de ruedas reconocida internacionalmente como una de las más innovadoras de su categoría. Ese logro nos permitió, en 2019, contar con el apoyo de Toyota Motor Corporation. Con su respaldo, rediseñamos <a href=\"https://www.siruom.com/home\" target=\"_blank\">Siruom</a>, optimizamos procesos, construimos una nueva fábrica y adoptamos la filosofía Kaizen. Integramos esta disciplina de mejora continua con estándares de calidad de grado médico para entregar excelencia en cada proyecto.",
+        "about.p3": "Hoy, Edites Solutions va más allá de la innovación médica. Brindamos diseño de hardware, desarrollo de software y consultoría especializada—siempre con foco en la innovación, la calidad y tus resultados.",
+        "about.learnMoreSiruom": "Conoce más sobre Siruom",
+        "services.title": "Soluciones inteligentes",
+        "services.text_html": "Nuestra misión es clara: cerrar la brecha entre la imaginación y la realidad, entregando soluciones que superen expectativas y generen valor real.<br/><br/>Desarrollamos software a medida, diseñamos hardware de alto impacto y ofrecemos consultoría orientada a resultados. Claro. Efectivo. Contundente.",
+        "services.contact": "Contáctanos",
+        "pills.software": "Software",
+        "pills.hardware": "Hardware",
+        "pills.medical": "Dispositivos médicos",
+        "pills.consulting": "Consultoría de ingeniería",
+        "pills.startup": "Consultoría para startups",
+        "pills.electronics": "Electrónica",
+        "pills.ai": "IA",
+        "pills.iot": "IoT",
+        "pills.robotics": "Robótica",
+        "pills.electric": "Movilidad eléctrica",
+        "pills.research": "Investigación de mercado",
+        "pills.special": "Desarrollos especiales",
+        "products.title": "Nuestras Creaciones",
+        "products.subtitle": "Soluciones innovadoras que impulsan resultados",
+        "product1.title": "Siruom WABI",
+        "product1.desc": "Creamos Siruom, una silla de ruedas omnidireccional de vanguardia que ofrece movilidad avanzada, confort y tecnología innovadora para mejorar la calidad de vida.",
+        "product2.title": "Siruom Protect",
+        "product2.desc": "Desarrollamos un sistema autónomo de desinfección para unidades de terapia intensiva, garantizando entornos estériles y seguros con tecnología avanzada.",
+        "product3.title": "Neumoc-1000TI",
+        "product3.desc": "Fabricamos un ventilador de cuidados intensivos, fortaleciendo la respuesta médica con tecnología avanzada durante la pandemia de COVID-19.",
+        "product4.title": "Software industrial a medida",
+        "product4.desc": "Desarrollamos software con bases de datos, analítica avanzada y pantallas de visualización, optimizando la gestión y el monitoreo en industrias.",
+        "product5.title": "Automatización IoT en bodega",
+        "product5.desc": "Implementamos un sistema IoT para automatizar bombas en la producción de vino en una bodega premium de la Patagonia, optimizando procesos y mejorando la calidad del producto.",
+        "product6.title": "Estudio de mercado de vehículos eléctricos",
+        "product6.desc": "Realizamos un análisis integral para una empresa española, evaluando mercado, competencia, legislación y políticas en Latinoamérica, impulsando su estrategia de expansión.",
+        "product7.title": "Consultoría para startups",
+        "product7.desc": "Brindamos evaluación integral, hojas de ruta estratégicas, planes de negocio y decks de inversión, impulsando el crecimiento y financiamiento de startups innovadoras en distintos sectores.",
+        "product8.title": "Carro eléctrico para producción",
+        "product8.desc": "Fabricamos un carro eléctrico para optimizar la alimentación de líneas de producción, mejorando la eficiencia y fluidez en procesos industriales.",
+        "product9.title": "Piezas termoformadas especiales",
+        "product9.desc": "Diseñamos y fabricamos matrices para piezas termoformadas especiales, ofreciendo soluciones personalizadas y de alta precisión para diversas aplicaciones industriales.",
+        "product10.title": "Útiles y matrices para producción",
+        "product10.desc": "Desarrollamos plantillas y útiles de armado a medida para optimizar la precisión y eficiencia en procesos de producción industrial.",
+        "product11.title": "Sistema de desinfección – Industria petroquímica",
+        "product11.desc": "Diseñamos y fabricamos un sistema de desinfección especializado para una empresa petroquímica, garantizando seguridad y eficiencia en sus procesos industriales.",
+        "product12.title": "Automatización industrial con PLC",
+        "product12.desc": "Diseñamos y programamos sistemas de automatización basados en PLC, integrando hardware y software para optimizar procesos industriales con precisión y alta eficiencia.",
+        "stats.years": "Años de experiencia",
+        "stats.projects": "Proyectos",
+        "stats.awards": "Premios a la innovación",
+        "testimonials.title": "Lo que dicen nuestros clientes",
+        "testimonials.subtitle": "No lo decimos solo nosotros. Conoce a quienes ayudamos a superar sus desafíos tecnológicos.",
+        "contact.title": "Construyamos algo increíble",
+        "contact.subtitle": "¿Listo para comenzar tu próximo proyecto? Escríbenos hoy.",
+        "contact.name": "Tu nombre",
+        "contact.email": "Tu correo",
+        "contact.company": "Nombre de la empresa",
+        "contact.message": "Mensaje",
+        "contact.submit": "Enviar",
+        "footer.place": "Nuestras sedes",
+        "footer.phone": "Teléfonos",
+        "footer.services": "Servicios",
+        "common.getIt": "Obtener",
+        "sector.label": "Sector: ",
+        "sector.medical": "Dispositivos médicos",
+        "sector.software": "Software",
+        "sector.iot": "IoT",
+        "sector.research": "Investigación de mercado",
+        "sector.startup": "Consultoría para startups",
+        "sector.hardware": "Hardware",
+        "sector.automation": "Automatización"
+      }
+    };
+    </script>
+
+    <script>
         // Scroll to top functionality
         function scrollToTop() {
             window.scrollTo({
@@ -1271,27 +1484,49 @@
         }
 
         async function loadTranslations(lang) {
-            const res = await fetch('lang/translations.json');
-            const all = await res.json();
-            return all[lang];
+            // Use inline first (works on file://), try fetch as a refresh fallback
+            if (window.TRANSLATIONS && window.TRANSLATIONS[lang]) {
+                return window.TRANSLATIONS[lang];
+            }
+            try {
+                const res = await fetch('./lang/translations.json');
+                const all = await res.json();
+                window.TRANSLATIONS = all;
+                return all[lang];
+            } catch (e) {
+                console.warn('Translations fetch failed, using inline if available.', e);
+                return window.TRANSLATIONS ? window.TRANSLATIONS[lang] : null;
+            }
         }
 
         function applyTranslations(dict) {
             if (!dict) return;
+            // Helper: set only the text node, preserve child elements (icons, spans, etc.)
+            function setElementTextPreserveChildren(el, text) {
+                const firstTextNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+                if (firstTextNode) {
+                    firstTextNode.textContent = text;
+                } else {
+                    el.insertBefore(document.createTextNode(text), el.firstChild);
+                }
+            }
+
             // Text content
             document.querySelectorAll('[data-i18n]').forEach(node => {
                 const key = node.getAttribute('data-i18n');
-                if (dict[key]) node.textContent = dict[key];
+                if (dict[key] != null) setElementTextPreserveChildren(node, String(dict[key]));
             });
+            
             // InnerHTML (safe curated keys only)
             document.querySelectorAll('[data-i18n-html]').forEach(node => {
                 const key = node.getAttribute('data-i18n-html');
-                if (dict[key]) node.innerHTML = dict[key];
+                if (dict[key] != null) node.innerHTML = String(dict[key]);
             });
+            
             // Placeholders
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder');
-                if (dict[key]) el.setAttribute('placeholder', dict[key]);
+                if (dict[key] != null) el.setAttribute('placeholder', String(dict[key]));
             });
         }
 
@@ -1301,6 +1536,7 @@
             
             // Update current language display
             currentLang.textContent = lang.toUpperCase();
+            document.documentElement.setAttribute('lang', lang);
             
             // Update active state
             options.forEach(option => {
