@@ -16,13 +16,25 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            padding-top: var(--header-height);
         }
+
+        :root {
+            --container-max: 1200px;
+            --header-height: 72px;
+            --page-side-pad: 1rem;
+        }
+
+        body.no-scroll { overflow: hidden; }
+
+        html { scroll-behavior: smooth; }
+
+        section { scroll-margin-top: calc(var(--header-height) + 16px); }
 
         /* Header */
         header {
             background: black;
             color: white;
-            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -31,12 +43,13 @@
         }
 
         nav {
-            max-width: 1200px;
+            max-width: var(--container-max);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            padding: 0 var(--page-side-pad);
+            min-height: var(--header-height);
         }
 
         .logo {
@@ -45,7 +58,7 @@
         }
 
         .logo img {
-            height: 70px;
+            height: 48px;
             width: auto;
             object-fit: contain;
         }
@@ -73,6 +86,19 @@
             gap: 1rem;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.45rem 0.6rem;
+            border-radius: 999px;
+            cursor: pointer;
+            line-height: 0;
+        }
+
+        .mobile-menu-btn i { font-size: 1rem; }
+
         .language-selector {
             position: relative;
             display: inline-block;
@@ -82,14 +108,14 @@
             background: transparent;
             color: white;
             border: 1px solid white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .language-btn:hover {
@@ -99,18 +125,20 @@
 
         .language-dropdown {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
             background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            min-width: 120px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            min-width: 180px;
             z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
+            transform: translateY(-6px) scale(0.98);
+            transform-origin: top right;
+            transition: opacity 0.14s ease, transform 0.14s ease;
+            overflow: hidden;
         }
 
         .language-dropdown.show {
@@ -120,26 +148,23 @@
         }
 
         .language-option {
-            padding: 0.8rem 1rem;
-            color: #333;
+            padding: 0.75rem 0.875rem;
+            color: #111827;
             text-decoration: none;
-            display: block;
-            transition: background 0.3s;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            transition: background 0.15s ease;
         }
 
         .language-option:last-child {
             border-bottom: none;
         }
 
-        .language-option:hover {
-            background: #f8f9fa;
-        }
+        .language-option:hover { background: #f3f4f6; }
 
-        .language-option.active {
-            background: #667eea;
-            color: white;
-        }
+        .language-option.active { background: #eef2ff; color: #3730a3; }
 
         .cta-button {
             background: white;
@@ -166,14 +191,14 @@
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 120px 0 80px;
+            padding: 64px 0 80px;
             text-align: left;
         }
 
         .hero-content {
-            max-width: 1200px;
+            max-width: var(--container-max);
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 var(--page-side-pad);
         }
 
         .hero h1 {
@@ -241,14 +266,9 @@
         }
 
         .container {
-            max-width: 90%;
+            max-width: var(--container-max);
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-        .sub-container {
-            max-width: inherit;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 var(--page-side-pad);
         }
         
 
@@ -401,7 +421,7 @@
         }
 
         .product-image {
-            height: 350px;
+            height: clamp(220px, 40vw, 350px);
             background-size: cover;
             background-position: center;
             position: relative;
@@ -425,29 +445,39 @@
             background-position: center;
         }
 
-        /* Products Carousel */
+        /* Products Carousel (shadcn-like) */
         .products-carousel {
             position: relative;
-            overflow: hidden;
-            padding:5px;
+            padding: 5px 0;
         }
+
+        .carousel-viewport {
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scroll-padding-left: 0;
+        }
+
+        .carousel-track::-webkit-scrollbar { display: none; }
 
         .products-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, minmax(260px, 1fr));
             gap: 2rem;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            position: absolute;
-            top: 0;
-            left: 7.5%;
-            width: 85%;
+            padding: 0 0.5rem;
+            opacity: 1;
         }
 
-        .products-slide.active {
-            opacity: 1;
-            position: relative;
-        }
+        .products-slide.active { opacity: 1; }
 
         .carousel-nav {
             text-align: center;
@@ -480,8 +510,8 @@
             background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -490,14 +520,17 @@
             font-size: 18px;
             transition: background 0.3s;
             z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
         .carousel-arrow.prev {
-            left: 10px; /* Mueve la flecha izquierda más cerca del borde del contenedor */
+            left: 0;
+            transform: translate(-50%, -50%);
         }
 
         .carousel-arrow.next {
-            right: 10px; /* Mueve la flecha derecha más cerca del borde del contenedor */
+            right: 0;
+            transform: translate(50%, -50%);
         }
 
         .product-content {
@@ -694,9 +727,7 @@
         .footer-section a:hover {
             color: #ffba3b;
         }
-        .product-description{
-            height:200px;
-        }
+        .product-description { margin-bottom: 1rem; }
 
         .footer-bottom {
             text-align: center;
@@ -706,17 +737,26 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .services-content { grid-template-columns: 1fr; }
+            .services-pills { grid-template-columns: repeat(2, 1fr); }
+            .products-slide { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+            .carousel-arrow.prev { left: 0; }
+            .carousel-arrow.next { right: 0; }
+            .mobile-menu-btn { display: inline-flex; }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 1rem;
             }
 
             .hero h2 {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
 
             .hero-buttons {
@@ -729,6 +769,40 @@
             .testimonials-grid {
                 grid-template-columns: 1fr;
             }
+            .products-slide { grid-template-columns: 1fr; }
+            .carousel-arrow { display: none; }
+        }
+
+        /* Mobile nav overlay */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 900;
+        }
+        .menu-overlay.show { opacity: 1; pointer-events: auto; }
+
+        /* Mobile nav drawer */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #111;
+                flex-direction: column;
+                gap: 1.25rem;
+                padding: 1.5rem;
+                z-index: 1001;
+                transform: translateY(-8px);
+            }
+            .nav-links.open { display: flex; transform: translateY(0); }
+            .nav-links a { font-size: 1.1rem; }
         }
 
         /* Animations */
@@ -755,37 +829,45 @@
             <div class="logo">
                 <img src="images/PNG/header.png" alt="Edites Solutions Logo" onclick="scrollToTop()" style="cursor: pointer;">
             </div>
-            <ul class="nav-links">
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#products">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="primary-nav">
+                <li><a href="#about" data-i18n="nav.about">About Us</a></li>
+                <li><a href="#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="#products" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
             <div class="header-right">
                 <div class="language-selector">
-                    <button class="language-btn" onclick="toggleLanguageDropdown()">
-                        <i class="fas fa-globe"></i>
+                    <button class="language-btn" id="lang-toggle" aria-haspopup="true" aria-expanded="false" onclick="toggleLanguageDropdown()">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
                         <span id="current-language">EN</span>
-                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     </button>
-                    <div class="language-dropdown" id="language-dropdown">
-                        <a href="#" class="language-option active" onclick="changeLanguage('en')">English</a>
-                        <a href="#" class="language-option" onclick="changeLanguage('es')">Español</a>
+                    <div class="language-dropdown" id="language-dropdown" role="menu" aria-labelledby="lang-toggle">
+                        <a href="#" class="language-option active" role="menuitemradio" aria-checked="true" onclick="changeLanguage('en', this); return false;">
+                            English <span>EN</span>
+                        </a>
+                        <a href="#" class="language-option" role="menuitemradio" aria-checked="false" onclick="changeLanguage('es', this); return false;">
+                            Español <span>ES</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </nav>
+        <div class="menu-overlay" id="menu-overlay"></div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content fade-in-up">
-            <h1>Future Forward</h1>
-            <h2>Engineering Your Tomorrow</h2>
-            <p>We build the brains and brawn for your next big idea. From circuits to code, we make it happen.</p>
+            <h1 data-i18n="hero.kicker">Future Forward</h1>
+            <h2 data-i18n="hero.title">Engineering Your Tomorrow</h2>
+            <p data-i18n="hero.subtitle">We build the brains and brawn for your next big idea. From circuits to code, we make it happen.</p>
             <div class="hero-buttons">
-                <a href="#contact" class="btn-primary">Start Now <i class="fas fa-arrow-right"></i></a>
-                <a href="#services" class="btn-secondary">Learn More</a>
+                <a href="#contact" class="btn-primary"><span data-i18n="hero.ctaPrimary">Start Now</span> <i class="fas fa-arrow-right"></i></a>
+                <a href="#services" class="btn-secondary" data-i18n="hero.ctaSecondary">Learn More</a>
             </div>
         </div>
     </section>
@@ -795,20 +877,19 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
-                    <h2>About Edites Solutions</h2>
+                    <h2 data-i18n="about.title">About Edites Solutions</h2>
                     <!-- 
                     <p>We are a passionate team of engineers and innovators dedicated to creating cutting-edge solutions that drive the future of technology. From software development to hardware design, we bring your ideas to life with precision and creativity.</p>
                     <p>Our mission is to bridge the gap between imagination and implementation, delivering solutions that not only meet your needs but exceed your expectations. With years of experience in the tech industry, we understand what it takes to build successful, scalable, and innovative products.</p>
                 -->
-                    <p> We are a passionate team of engineers and innovators transforming bold ideas into cutting-edge solutions. From revolutionary medical products to global engineering services, we combine precision, creativity, and technical excellence to design projects that make a lasting impact.</p>
-                    <p> Our story began with <a href="https://www.siruom.com/home" target="_blank" style="color: rgb(72, 28, 129); font-weight: bold; text-decoration: none;">Siruom</a>, a wheelchair internationally recognized as one of the most innovative in its category. That achievement led us, in 2019, to earn the support of Toyota Motor Corporation. With their backing, we redesigned <a href="https://www.siruom.com/home" target="_blank" style="color: rgb(72, 28, 129); font-weight: bold; text-decoration: none;">Siruom</a>, optimized our processes, built a new factory, and adopted the Kaizen philosophy. We merged this discipline of continuous improvement with rigorous medical-grade quality standards to deliver excellence in every project.</p>
-                    <p> Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.</p>
-                <a href="#contact" class="learn-more">
-                        <a href="https://www.siruom.com/home" target="_blank" style="color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;">Learn More About Siruom
-                        <div class="arrow-circle">
+                    <p data-i18n="about.p1"> We are a passionate team of engineers and innovators transforming bold ideas into cutting-edge solutions. From revolutionary medical products to global engineering services, we combine precision, creativity, and technical excellence to design projects that make a lasting impact.</p>
+                    <p data-i18n-html="about.p2_html"> Our story began with Siruom...</p>
+                    <p data-i18n="about.p3"> Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.</p>
+                    <a href="https://www.siruom.com/home" target="_blank" class="learn-more" style="color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;" data-i18n="about.learnMoreSiruom">
+                        Learn More About Siruom
+                        <span class="arrow-circle" aria-hidden="true">
                             <i class="fas fa-arrow-right"></i>
-                        </div>
-                        </a>
+                        </span>
                     </a>
                 
                 </div>
@@ -828,34 +909,32 @@
     <section id="services" class="services">
         <div class="container">
             <div class="section-header">
-                <h2>Smart Solutions</h2>
+                <h2 data-i18n="services.title">Smart Solutions</h2>
                 <i class="fas fa-arrow-right arrow"></i>
             </div>
             <div class="services-content">
                 <div class="services-text">
-                    <p>Our mission is clear: to bridge the gap between imagination and reality, delivering solutions that exceed expectations and create real value.
-
-We craft custom software, design killer hardware, and offer consulting focused on real outcomes. Clear. Effective. Impactful.</p>
+                    <p data-i18n-html="services.text_html">Our mission is clear...</p>
                     <a href="#contact" class="learn-more">
-                        Contact Us
+                        <span data-i18n="services.contact">Contact Us</span>
                         <div class="arrow-circle">
                             <i class="fas fa-arrow-right"></i>
                         </div>
                     </a>
                 </div>
                 <div class="services-pills">
-                    <div class="pill">Software</div>
-                    <div class="pill">Hardware</div>
-                    <div class="pill">Medical Devices</div>
-                    <div class="pill">Engineering Consulting</div>
-                    <div class="pill">Startup Consulting</div>
-                    <div class="pill">Electronics</div>
-                    <div class="pill">AI</div>
-                    <div class="pill">IoT</div>
-                    <div class="pill">Robotics</div>
-                    <div class="pill">Electric Mobility</div>
-                    <div class="pill">Market Research</div>
-                    <div class="pill">Special Developments</div>
+                    <div class="pill" data-i18n="pills.software">Software</div>
+                    <div class="pill" data-i18n="pills.hardware">Hardware</div>
+                    <div class="pill" data-i18n="pills.medical">Medical Devices</div>
+                    <div class="pill" data-i18n="pills.consulting">Engineering Consulting</div>
+                    <div class="pill" data-i18n="pills.startup">Startup Consulting</div>
+                    <div class="pill" data-i18n="pills.electronics">Electronics</div>
+                    <div class="pill" data-i18n="pills.ai">AI</div>
+                    <div class="pill" data-i18n="pills.iot">IoT</div>
+                    <div class="pill" data-i18n="pills.robotics">Robotics</div>
+                    <div class="pill" data-i18n="pills.electric">Electric Mobility</div>
+                    <div class="pill" data-i18n="pills.research">Market Research</div>
+                    <div class="pill" data-i18n="pills.special">Special Developments</div>
                 </div>
             </div>
         </div>
@@ -865,212 +944,193 @@ We craft custom software, design killer hardware, and offer consulting focused o
     <section id="products" class="products">
         <div class="container">
             <div class="section-header">
-                <h2>Our Creations</h2>
-                <p>Innovative solutions that drive results</p>
+                <h2 data-i18n="products.title">Our Creations</h2>
+                <p data-i18n="products.subtitle">Innovative solutions that drive results</p>
             </div>
-            <div class="sub-container">
-                <div class="products-carousel">
-                    <button class="carousel-arrow prev" onclick="changeProductsSlide(-1)">‹</button>
-                <div class="products-slide active">
-                    <div class="product-card">
-                        <div class="product-image quantum-leap"></div>
-                        <div class="product-content">
-                            <h3>Siruom WABI</h3>
-                            <p>We create Siruom, a cutting-edge omnidirectional wheelchair, offering advanced mobility, comfort, and innovative technology to improve quality of life.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Medical Devices</em>
+            <div class="products-carousel">
+                <button class="carousel-arrow prev" onclick="carouselPrev()" aria-label="Previous slide">‹</button>
+                <div class="carousel-viewport" id="products-viewport">
+                    <div class="carousel-track" id="products-track">
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product1.title">Siruom WABI</h3>
+                                    <p data-i18n="product1.desc">We create Siruom, a cutting-edge omnidirectional wheelchair, offering advanced mobility, comfort, and innovative technology to improve quality of life.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Medical Devices</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image circuit-master"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product2.title">Siruom Protect</h3>
+                                    <p data-i18n="product2.desc">We developed an autonomous disinfection system for intensive care units, ensuring sterile and safe environments with advanced technology.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Medical Devices</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image code-weaver"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product3.title">Neumoc-1000TI</h3>
+                                    <p data-i18n="product3.desc">We manufactured an intensive care ventilator, strengthening the medical response with advanced technology during the COVID-19 pandemic.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Medical Devices</em>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image circuit-master"></div>
-                        <div class="product-content">
-                            <h3>Siruom Protect</h3>
-                            <p>We developed an autonomous disinfection system for intensive care units, ensuring sterile and safe environments with advanced technology.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Medical Devices</em>
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product4.title">Custom Industrial Software</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product4.desc">We develop software with databases, advanced analytics, and visualization screens, optimizing management and monitoring in industries.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Software</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image circuit-master"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product5.title">IoT Automation in Winery</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product5.desc">We implemented an IoT system to automate pumps in wine production at a premium winery located in Patagonia, optimizing processes and improving product quality.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: IoT</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image code-weaver"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product6.title">Electric Vehicle Market Study</h3>
+                                    <p data-i18n="product6.desc">We conducted a comprehensive analysis for a Spanish company, evaluating the market, competition, legislation, and policies in Latin America, promoting its expansion strategy.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Market Research</em>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image code-weaver"></div>
-                        <div class="product-content">
-                            <h3>Neumoc-1000TI</h3>
-                            <p>We manufactured an intensive care ventilator, strengthening the medical response with advanced technology during the COVID-19 pandemic.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Medical Devices</em>
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product7.title">Consulting for Startups</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product7.desc">We provide comprehensive evaluation, strategic roadmaps, business plans, and investment decks, driving the growth and financing of innovative startups in different sectors.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Startup consulting</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image circuit-master"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product8.title">Electric Dolly for Production</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product8.desc">We manufacture an electric dolly to optimize production line feeding, improving efficiency and fluidity in industrial processes.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Hardware</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image code-weaver"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product9.title">Special Thermoformed Parts</h3>
+                                    <p data-i18n="product9.desc">We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Hardware</em>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Future slides for additional products -->
-                <div class="products-slide">
-                    <div class="product-card">
-                        <div class="product-image quantum-leap"></div>
-                        <div class="product-content">
-                            <h3>Custom Industrial Software</h3>
-                            <div class="product-description">
-                                <p>We develop software with databases, advanced analytics, and visualization screens, optimizing management and monitoring in industries.</p>
-                            </div>
-                            
-                        </div>
-                         <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Software</em>
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product10.title">Jigs and Dies for Production</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product10.desc">We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Hardware</em>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image circuit-master"></div>
-                        <div class="product-content">
-                            <h3>IoT Automation in Winery</h3>
-                             <div class="product-description">
-
-                            <p>We implemented an IoT system to automate pumps in wine production at a premium winery located in Patagonia, optimizing processes and improving product quality.</p>
-                             </div>
-                            
-                        </div>
-                        <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: IoT</em>
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product11.title">Disinfection System - Petrochemical Industry</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product11.desc">We designed and manufactured a specialized disinfection system for a petrochemical company, ensuring safety and efficiency in its industrial processes.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Hardware</em>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image code-weaver"></div>
-                        <div class="product-content">
-                            <h3>Electric Vehicle Market Study</h3>
-                            <p>We conducted a comprehensive analysis for a Spanish company, evaluating the market, competition, legislation, and policies in Latin America, promoting its expansion strategy.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Market Research</em>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="products-slide">
-                    <div class="product-card">
-                        <div class="product-image quantum-leap"></div>
-                        <div class="product-content">
-                            <h3>Consulting for Startups</h3>
-                            <div class="product-description">
-                                <p>We provide comprehensive evaluation, strategic roadmaps, business plans, and investment decks, driving the growth and financing of innovative startups in different sectors.</p>
-                            </div>
-                            
-                        </div>
-                         <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Startup consulting</em>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image circuit-master"></div>
-                        <div class="product-content">
-                            <h3>Electric Dolly for Production</h3>
-                             <div class="product-description">
-
-                            <p>We manufacture an electric dolly to optimize production line feeding, improving efficiency and fluidity in industrial processes.</p>
-                             </div>
-                            
-                        </div>
-                        <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Hardware</em>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image code-weaver"></div>
-                        <div class="product-content">
-                            <h3>Special Thermoformed Parts</h3>
-                            <p>We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Hardware</em>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="products-slide">
-                    <div class="product-card">
-                        <div class="product-image quantum-leap"></div>
-                        <div class="product-content">
-                            <h3>Jigs and Dies for Production</h3>
-                            <div class="product-description">
-                                <p>We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.</p>
-                            </div>
-                            
-                        </div>
-                         <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Hardware</em>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="products-slide">
-                    <div class="product-card">
-                        <div class="product-image quantum-leap"></div>
-                        <div class="product-content">
-                            <h3>Disinfection System - Petrochemical Industry</h3>
-                            <div class="product-description">
-                                <p>We designed and manufactured a specialized disinfection system for a petrochemical company, ensuring safety and efficiency in its industrial processes.</p>
-                            </div>
-                            
-                        </div>
-                         <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Hardware</em>
-                                </div>
-                            </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image code-weaver"></div>
-                        <div class="product-content">
-                            <h3>Industrial Automation with PLC</h3>
-                            <p>We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.</p>
-                            <div class="product-actions">
-                                <a href="#contact" class="buy-btn">Get it</a>
-                                <div class="sector-badge">
-                                    <em>Sector: Automation</em>
+                            <div class="product-card">
+                                <div class="product-image code-weaver"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product12.title">Industrial Automation with PLC</h3>
+                                    <p data-i18n="product12.desc">We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Automation</em>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-
-
-                    <button class="carousel-arrow next" onclick="changeProductsSlide(1)">›</button>
-                </div>
-                <div class="carousel-nav">
-                    <div class="carousel-dot active" onclick="goToProductsSlide(0)"></div>
-                    <div class="carousel-dot" onclick="goToProductsSlide(1)"></div>
-                </div>
+                <button class="carousel-arrow next" onclick="carouselNext()" aria-label="Next slide">›</button>
+                <div class="carousel-nav"></div>
             </div>
         </div>
     </section>    <!-- Stats Section -->
@@ -1096,9 +1156,9 @@ We craft custom software, design killer hardware, and offer consulting focused o
     <!-- Testimonials -->
     <section class="testimonials">
         <div class="container">
-            <div class="section-header">
-                <h2>What Our Clients Say</h2>
-                <p>Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.</p>
+                <div class="section-header">
+                <h2 data-i18n="testimonials.title">What Our Clients Say</h2>
+                <p data-i18n="testimonials.subtitle">Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
@@ -1130,27 +1190,27 @@ We craft custom software, design killer hardware, and offer consulting focused o
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-header">
-                <h2>Let's Build Something Awesome</h2>
-                <p>Ready to start your next project? Get in touch with us today.</p>
+                <h2 data-i18n="contact.title">Let's Build Something Awesome</h2>
+                <p data-i18n="contact.subtitle">Ready to start your next project? Get in touch with us today.</p>
             </div>
             <form class="contact-form">
                 <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="name" data-i18n="contact.name">Your Name</label>
+                    <input type="text" id="name" name="name" required data-i18n-placeholder="contact.name" placeholder="Your Name">
                 </div>
                 <div class="form-group">
-                    <label for="email">Your Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email" data-i18n="contact.email">Your Email</label>
+                    <input type="email" id="email" name="email" required data-i18n-placeholder="contact.email" placeholder="Your Email">
                 </div>
                 <div class="form-group">
-                    <label for="company">Company Name</label>
-                    <input type="text" id="company" name="company">
+                    <label for="company" data-i18n="contact.company">Company Name</label>
+                    <input type="text" id="company" name="company" data-i18n-placeholder="contact.company" placeholder="Company Name">
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <label for="message" data-i18n="contact.message">Message</label>
+                    <textarea id="message" name="message" rows="5" required data-i18n-placeholder="contact.message" placeholder="Message"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send It!</button>
+                <button type="submit" class="submit-btn" data-i18n="contact.submit">Send It!</button>
             </form>
         </div>
     </section>
@@ -1160,7 +1220,7 @@ We craft custom software, design killer hardware, and offer consulting focused o
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Our Lair</h3>
+                    <h3 data-i18n="footer.place">Our Lair</h3>
                     <p>Colegio Nacional 540, Villa Regina</p>
                     <p>Argentina, 8000</p>
                     <p></p>
@@ -1168,13 +1228,13 @@ We craft custom software, design killer hardware, and offer consulting focused o
                     <p>Spain, 28028</p>
                 </div>
                 <div class="footer-section">
-                    <h3>The Batphone</h3>
+                    <h3 data-i18n="footer.phone">The Batphone</h3>
                     <p>+54 (298) 4747469</p>
                     <p>whatsapp: +34 647463152</p>
                     <p>admin@editessolutions.com</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Services</h3>
+                    <h3 data-i18n="footer.services">Services</h3>
                     <a href="#services">Software Development</a>
                     <a href="#services">Hardware Design</a>
                     <a href="#services">Consulting</a>
@@ -1204,10 +1264,38 @@ We craft custom software, design killer hardware, and offer consulting focused o
         // Language selector functionality
         function toggleLanguageDropdown() {
             const dropdown = document.getElementById('language-dropdown');
+            const toggleBtn = document.getElementById('lang-toggle');
+            const willShow = !dropdown.classList.contains('show');
             dropdown.classList.toggle('show');
+            toggleBtn.setAttribute('aria-expanded', String(willShow));
         }
 
-        function changeLanguage(lang) {
+        async function loadTranslations(lang) {
+            const res = await fetch('lang/translations.json');
+            const all = await res.json();
+            return all[lang];
+        }
+
+        function applyTranslations(dict) {
+            if (!dict) return;
+            // Text content
+            document.querySelectorAll('[data-i18n]').forEach(node => {
+                const key = node.getAttribute('data-i18n');
+                if (dict[key]) node.textContent = dict[key];
+            });
+            // InnerHTML (safe curated keys only)
+            document.querySelectorAll('[data-i18n-html]').forEach(node => {
+                const key = node.getAttribute('data-i18n-html');
+                if (dict[key]) node.innerHTML = dict[key];
+            });
+            // Placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (dict[key]) el.setAttribute('placeholder', dict[key]);
+            });
+        }
+
+        async function changeLanguage(lang, el) {
             const currentLang = document.getElementById('current-language');
             const options = document.querySelectorAll('.language-option');
             
@@ -1217,38 +1305,48 @@ We craft custom software, design killer hardware, and offer consulting focused o
             // Update active state
             options.forEach(option => {
                 option.classList.remove('active');
+                option.setAttribute('aria-checked', 'false');
             });
-            event.target.classList.add('active');
+            if (el) { el.classList.add('active'); el.setAttribute('aria-checked', 'true'); }
             
             // Close dropdown
             document.getElementById('language-dropdown').classList.remove('show');
             
-            // Here you would typically load the appropriate language content
-            console.log('Language changed to:', lang);
+            // Load and apply translations
+            try {
+                const dict = await loadTranslations(lang);
+                applyTranslations(dict);
+                localStorage.setItem('site_lang', lang);
+            } catch (e) {
+                console.error('Failed to load translations', e);
+            }
         }
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const languageSelector = document.querySelector('.language-selector');
+            const dropdown = document.getElementById('language-dropdown');
+            const toggleBtn = document.getElementById('lang-toggle');
             if (!languageSelector.contains(event.target)) {
-                document.getElementById('language-dropdown').classList.remove('show');
+                dropdown.classList.remove('show');
+                toggleBtn.setAttribute('aria-expanded', 'false');
             }
         });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight - 20; // 20px extra padding
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
+                // Close mobile nav after navigation
+                closeMobileNav();
             });
         });
 
@@ -1277,46 +1375,84 @@ We craft custom software, design killer hardware, and offer consulting focused o
             observer.observe(el);
         });
 
-        // Products Carousel functionality
-        let currentProductsSlide = 0;
-        const productsSlides = document.querySelectorAll('.products-slide');
-        const productsDots = document.querySelectorAll('.carousel-nav .carousel-dot');
+        // Products Carousel (shadcn-like) functionality
+        const productsTrack = document.getElementById('products-track');
+        const productsViewport = document.getElementById('products-viewport');
+        const slides = Array.from(document.querySelectorAll('.products-slide'));
+        const carouselNav = document.querySelector('.products-carousel .carousel-nav');
+        let currentIndex = 0;
 
-        function changeProductsSlide(direction) {
-            const newSlide = currentProductsSlide + direction;
-            
-            if (newSlide < 0) {
-                return; // Don't go below 0
-            } else if (newSlide >= productsSlides.length) {
-                return; // Don't go above max slides
-            }
-            
-            // Update slides
-            productsSlides[currentProductsSlide].classList.remove('active');
-            productsSlides[newSlide].classList.add('active');
-            
-            // Update dots
-            productsDots[currentProductsSlide].classList.remove('active');
-            productsDots[newSlide].classList.add('active');
-            
-            currentProductsSlide = newSlide;
+        function updateDots() {
+            if (!carouselNav) return;
+            carouselNav.innerHTML = slides
+                .map((_, i) => `<span class="carousel-dot${i === currentIndex ? ' active' : ''}" data-index="${i}"></span>`)
+                .join('');
+            carouselNav.querySelectorAll('.carousel-dot').forEach(dot => {
+                dot.addEventListener('click', () => goToSlide(Number(dot.dataset.index)));
+            });
         }
 
-        function goToProductsSlide(slideIndex) {
-            if (slideIndex < 0 || slideIndex >= productsSlides.length) {
-                return;
-            }
-            
-            // Update slides
-            productsSlides[currentProductsSlide].classList.remove('active');
-            productsSlides[slideIndex].classList.add('active');
-            
-            // Update dots
-            productsDots[currentProductsSlide].classList.remove('active');
-            productsDots[slideIndex].classList.add('active');
-            
-            currentProductsSlide = slideIndex;
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentIndex = index;
+            const viewportWidth = productsViewport.clientWidth;
+            productsTrack.scrollTo({ left: viewportWidth * currentIndex, behavior: 'smooth' });
+            updateDots();
         }
+
+        function carouselNext() { goToSlide(currentIndex + 1); }
+        function carouselPrev() { goToSlide(currentIndex - 1); }
+
+        // Sync index on manual scroll (snap)
+        productsTrack?.addEventListener('scroll', () => {
+            const viewportWidth = productsViewport.clientWidth;
+            const newIndex = Math.round(productsTrack.scrollLeft / viewportWidth);
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                updateDots();
+            }
+        }, { passive: true });
+
+        // Recompute on resize
+        window.addEventListener('resize', () => goToSlide(currentIndex));
+
+        // Init
+        updateDots();
+
+        // Language: set initial language from storage or default 'en'
+        (async function initLang() {
+            const saved = localStorage.getItem('site_lang') || 'en';
+            const currentBtn = Array.from(document.querySelectorAll('.language-option'))
+              .find(a => a.textContent.toLowerCase().includes(saved)) || null;
+            await changeLanguage(saved, currentBtn);
+        })();
+
+        // Mobile nav controls
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const nav = document.getElementById('primary-nav');
+        const overlay = document.getElementById('menu-overlay');
+
+        function openMobileNav() {
+            nav.classList.add('open');
+            overlay.classList.add('show');
+            document.body.classList.add('no-scroll');
+            mobileBtn.setAttribute('aria-label', 'Close menu');
+            mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        function closeMobileNav() {
+            nav.classList.remove('open');
+            overlay.classList.remove('show');
+            document.body.classList.remove('no-scroll');
+            mobileBtn.setAttribute('aria-label', 'Open menu');
+            mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        function toggleMobileNav() {
+            if (nav.classList.contains('open')) closeMobileNav(); else openMobileNav();
+        }
+
+        mobileBtn?.addEventListener('click', toggleMobileNav);
+        overlay?.addEventListener('click', closeMobileNav);
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
     </script>
 </body>
 </html> 
