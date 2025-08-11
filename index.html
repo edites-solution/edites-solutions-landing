@@ -685,6 +685,36 @@
             font-size: 0.9rem;
         }
 
+        /* Simple Logo Carousel (after Trusted By) */
+        .logo-carousel { padding: 16px 0 8px; }
+        .logo-carousel-viewport { overflow: hidden; }
+        .logo-carousel-row { 
+            display: flex; 
+            gap: 24px; 
+            justify-content: center; 
+            align-items: center; 
+            transition: opacity 0.25s ease; 
+        }
+        .logo-carousel-row.fade-out { opacity: 0; }
+        .logo-item {
+            width: var(--logo-max-width, 200px);
+            height: var(--logo-max-height, 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-item img { 
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            filter: grayscale(100%); 
+            opacity: 0.9; 
+        }
+        @media (max-width: 768px) {
+            .logo-carousel-row { gap: 16px; }
+            .logo-item { height: var(--logo-max-height, 72px); width: var(--logo-max-width, 160px); }
+        }
+
         /* Contact Form */
         .contact {
             padding: 80px 0;
@@ -1269,7 +1299,32 @@
                 <h2 data-i18n="testimonials.title">Trusted By</h2>
                 <p data-i18n="testimonials.subtitle">Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.</p>
             </div>
-            <div class="testimonials-grid">
+            <!-- Logo Carousel below the header -->
+            <div class="logo-carousel">
+                <div class="logo-carousel-viewport">
+                    <div class="logo-carousel-row" id="logo-carousel-row"></div>
+                </div>
+                <div id="logo-carousel-source" aria-hidden="true" style="display:none;">
+                    <img src="images/PNG/a1toyo.png" alt="Toyota">
+                    <img src="images/PNG/a2profertil.png" alt="Profertil">
+                    <img src="images/PNG/a3invap.png" alt="INVAP">
+                    <img src="images/PNG/a4fleni.png" alt="FLENI">
+                    <img src="images/PNG/a5karsan.png" alt="KARSAN">  
+                    <img src="images/PNG/a6adimra.png" alt="ADIMRA">
+                    <img src="images/PNG/a7came.png" alt="CAME">
+                    <img src="images/PNG/a8trafigura.png" alt="Trafigura">
+                    <img src="images/PNG/a9mbb.png" alt="Municipio de Bahía Blanca">
+                    <img src="images/PNG/a10puertobb.png" alt="Puerto Bahía Blanca">
+                    <img src="images/PNG/a11amcham.png" alt="AmCham">
+                    <img src="images/PNG/a12chacra.jpg" alt="La Chacra">
+                    <img src="images/PNG/a13fundacioninvap.png" alt="Fundación INVAP">
+                    <img src="images/PNG/a15cice.png" alt="CICE">
+                    <img src="images/PNG/a16israel.png" alt="Embajada de Israel">
+                    <img src="images/PNG/a17libic.jpg" alt="LIBIC">
+                    <img src="images/PNG/a14100k.png" alt="100K Latam">
+                </div>
+            </div>
+            <!-- <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-text">
                         "These guys turned our clunky software into a sleek, efficient beast. Seriously impressive work!"
@@ -1291,7 +1346,7 @@
                     <div class="testimonial-author">Ben Carter</div>
                     <div class="testimonial-role">Project Manager</div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -1884,6 +1939,46 @@
 
         // Init
         updateDots();
+
+        // Logo carousel (3 logos every 3 seconds)
+        (function initLogoCarousel() {
+            const srcImgs = Array.from(document.querySelectorAll('#logo-carousel-source img'));
+            const data = srcImgs.map(img => ({ src: img.getAttribute('src'), alt: img.getAttribute('alt') || '' }));
+            if (!data.length) return;
+            const row = document.getElementById('logo-carousel-row');
+            let index = 0;
+
+            function setMaxLogoHeight() {
+                const card = document.querySelector('.testimonial-card');
+                const h = card ? Math.max(60, Math.min(140, card.offsetHeight)) : 100;
+                document.documentElement.style.setProperty('--logo-max-height', `${h}px`);
+            }
+
+            function renderNext() {
+                if (!row) return;
+                row.classList.add('fade-out');
+                setTimeout(() => {
+                    row.innerHTML = '';
+                    for (let i = 0; i < 3; i++) {
+                        const item = data[(index + i) % data.length];
+                        const wrap = document.createElement('div');
+                        wrap.className = 'logo-item';
+                        const img = document.createElement('img');
+                        img.src = item.src;
+                        img.alt = item.alt;
+                        wrap.appendChild(img);
+                        row.appendChild(wrap);
+                    }
+                    row.classList.remove('fade-out');
+                }, 150);
+                index = (index + 3) % data.length;
+            }
+
+            setMaxLogoHeight();
+            window.addEventListener('resize', setMaxLogoHeight);
+            renderNext();
+            setInterval(renderNext, 3000);
+        })();
 
         // Language: set initial language from storage or default 'en'
         (async function initLang() {
