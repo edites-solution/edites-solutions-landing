@@ -417,6 +417,10 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .product-card:hover {
@@ -466,6 +470,7 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scroll-padding-left: 0;
+            padding-bottom: 10px;
         }
 
         .carousel-track::-webkit-scrollbar { display: none; }
@@ -538,6 +543,9 @@
 
         .product-content {
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
         }
 
         .product-content h3 {
@@ -575,15 +583,33 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin: 10px
+            margin: 10px;
+            margin-top: auto;
         }
 
         .sector-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: #ebe4e4b3;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
             text-align: right;
+            pointer-events: none;
+        }
+
+        /* Hide Get it buttons per request */
+        .buy-btn { display: none !important; }
+
+        /* Desktop: stabilize card height to prevent jump between slides */
+        @media (min-width: 993px) {
+            .product-card { min-height: 520px; }
         }
 
         .sector-badge em {
-            color: #667eea;
+            color: #6d7182;
             font-size: 0.9rem;
             font-style: italic;
             font-weight: 500;
@@ -668,6 +694,13 @@
             margin-bottom: 0.5rem;
             font-weight: bold;
         }
+        .error-text { color: #b00020; font-size: 0.9rem; margin-top: 0.4rem; min-height: 1em; }
+        .invalid { border-color: #b00020 !important; background-color: #fff7f7; }
+        .form-status { margin-bottom: 1rem; font-size: 0.95rem; }
+        .form-status.success { color: #065f46; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.75rem; border-radius: 6px; }
+        .form-status.error { color: #b00020; background: #fff1f2; border: 1px solid #fecdd3; padding: 0.75rem; border-radius: 6px; }
+        .char-counter { text-align: right; font-size: 0.85rem; color: #666; margin-top: 0.25rem; }
+        .char-counter.over { color: #b00020; }
 
         .form-group input,
         .form-group textarea {
@@ -683,6 +716,26 @@
             outline: none;
             border-color: #667eea;
         }
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 16px;
+            transform: translate(-50%, 120%);
+            background: #111827; /* default, overridden by variants */
+            color: #ffffff;
+            padding: 0.9rem 1.2rem;
+            border-radius: 999px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            z-index: 2000;
+            pointer-events: none;
+            font-size: 0.95rem;
+        }
+        .toast.show { transform: translate(-50%, 0); opacity: 1; }
+        .toast.success { background: #059669; box-shadow: 0 10px 25px rgba(5,150,105,0.35); }
+        .toast.error { background: #dc2626; box-shadow: 0 10px 25px rgba(220,38,38,0.35); }
 
         .submit-btn {
             background: #667eea;
@@ -1238,22 +1291,27 @@
                 <h2 data-i18n="contact.title">Let's Build Something Awesome</h2>
                 <p data-i18n="contact.subtitle">Ready to start your next project? Get in touch with us today.</p>
             </div>
-            <form class="contact-form">
+            <form class="contact-form" novalidate>
                 <div class="form-group">
                     <label for="name" data-i18n="contact.name">Your Name</label>
                     <input type="text" id="name" name="name" required data-i18n-placeholder="contact.name" placeholder="Your Name">
+                    <small class="error-text" id="error-name"></small>
                 </div>
                 <div class="form-group">
                     <label for="email" data-i18n="contact.email">Your Email</label>
                     <input type="email" id="email" name="email" required data-i18n-placeholder="contact.email" placeholder="Your Email">
+                    <small class="error-text" id="error-email"></small>
                 </div>
                 <div class="form-group">
                     <label for="company" data-i18n="contact.company">Company Name</label>
-                    <input type="text" id="company" name="company" data-i18n-placeholder="contact.company" placeholder="Company Name">
+                    <input type="text" id="company" name="company" required data-i18n-placeholder="contact.company" placeholder="Company Name">
+                    <small class="error-text" id="error-company"></small>
                 </div>
                 <div class="form-group">
                     <label for="message" data-i18n="contact.message">Message</label>
-                    <textarea id="message" name="message" rows="5" required data-i18n-placeholder="contact.message" placeholder="Message"></textarea>
+                    <textarea id="message" name="message" rows="5" required maxlength="500" data-i18n-placeholder="contact.message" placeholder="Message"></textarea>
+                    <div class="char-counter" id="message-counter">0/500</div>
+                    <small class="error-text" id="error-message"></small>
                 </div>
                 <button type="submit" class="submit-btn" data-i18n="contact.submit">Send It!</button>
             </form>
@@ -1296,6 +1354,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script>
     // Inline translations to work without a server (file://). Fetch will be used only as a fallback.
@@ -1379,7 +1440,15 @@
         "sector.research": "Market Research",
         "sector.startup": "Startup consulting",
         "sector.hardware": "Hardware",
-        "sector.automation": "Automation"
+        "sector.automation": "Automation",
+        "errors.name.required": "Please enter your name",
+        "errors.email.required": "Please enter your email",
+        "errors.email.invalid": "Please enter a valid email",
+        "errors.company.required": "Please enter your company",
+        "errors.message.required": "Please enter a message",
+        "errors.message.max": "Message must be {max} characters or less",
+        "success.sent": "Message sent, we will contact you soon",
+        "errors.sendFailed": "Failed to send, please try again later"
       },
       "es": {
         "nav.about": "Sobre nosotros",
@@ -1460,7 +1529,15 @@
         "sector.research": "Investigación de mercado",
         "sector.startup": "Consultoría para startups",
         "sector.hardware": "Hardware",
-        "sector.automation": "Automatización"
+        "sector.automation": "Automatización",
+        "errors.name.required": "Por favor, ingresa tu nombre",
+        "errors.email.required": "Por favor, ingresa tu correo",
+        "errors.email.invalid": "Por favor, ingresa un correo válido",
+        "errors.company.required": "Por favor, ingresa el nombre de la empresa",
+        "errors.message.required": "Por favor, ingresa un mensaje",
+        "errors.message.max": "El mensaje debe tener {max} caracteres o menos",
+        "success.sent": "Mensaje enviado, nos contactaremos pronto",
+        "errors.sendFailed": "No se pudo enviar, por favor vuelve a intentarlo más tarde"
       }
     };
     </script>
@@ -1586,11 +1663,153 @@
             });
         });
 
-        // Form submission handling
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thanks for filling out the form! We\'ll get back to you soon.');
-        });
+        // Simple toast
+        let __toastTimer;
+        function showToast(message, variant = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.remove('success', 'error');
+            toast.classList.add(variant);
+            toast.classList.add('show');
+            clearTimeout(__toastTimer);
+            __toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Form validation and submission prep
+        (function initContactForm() {
+            const form = document.querySelector('.contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const companyInput = document.getElementById('company');
+            const messageInput = document.getElementById('message');
+            const maxMessage = Number(messageInput.getAttribute('maxlength')) || 500;
+
+            const errors = {
+                name: document.getElementById('error-name'),
+                email: document.getElementById('error-email'),
+                company: document.getElementById('error-company'),
+                message: document.getElementById('error-message')
+            };
+
+            const i18n = (key, fallback, vars) => {
+                const lang = localStorage.getItem('site_lang') || 'en';
+                let str = window.TRANSLATIONS?.[lang]?.[key] || fallback || '';
+                if (vars && typeof str === 'string') {
+                    Object.entries(vars).forEach(([k, v]) => {
+                        str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+                    });
+                }
+                return str;
+            };
+
+            function setError(input, key, msgFallback) {
+                input.classList.add('invalid');
+                if (errors[key]) errors[key].textContent = msgFallback;
+            }
+            function clearError(input, key) {
+                input.classList.remove('invalid');
+                if (errors[key]) errors[key].textContent = '';
+            }
+            function isValidEmail(value) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            }
+
+            // Live character counter
+            const counter = document.getElementById('message-counter');
+            function updateCounter() {
+                const len = messageInput.value.length;
+                counter.textContent = `${len}/${maxMessage}`;
+                counter.classList.toggle('over', len > maxMessage);
+            }
+            messageInput.addEventListener('input', updateCounter);
+            updateCounter();
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let valid = true;
+
+                // Name
+                if (!nameInput.value.trim()) {
+                    setError(nameInput, 'name', i18n('errors.name.required', 'Please enter your name'));
+                    valid = false;
+                } else {
+                    clearError(nameInput, 'name');
+                }
+
+                // Email
+                if (!emailInput.value.trim()) {
+                    setError(emailInput, 'email', i18n('errors.email.required', 'Please enter your email'));
+                    valid = false;
+                } else if (!isValidEmail(emailInput.value.trim())) {
+                    setError(emailInput, 'email', i18n('errors.email.invalid', 'Please enter a valid email'));
+                    valid = false;
+                } else {
+                    clearError(emailInput, 'email');
+                }
+
+                // Company
+                if (!companyInput.value.trim()) {
+                    setError(companyInput, 'company', i18n('errors.company.required', 'Please enter your company'));
+                    valid = false;
+                } else {
+                    clearError(companyInput, 'company');
+                }
+
+                // Message
+                const msg = messageInput.value.trim();
+                if (!msg) {
+                    setError(messageInput, 'message', i18n('errors.message.required', 'Please enter a message'));
+                    valid = false;
+                } else if (msg.length > maxMessage) {
+                    setError(messageInput, 'message', i18n('errors.message.max', `Message must be ${maxMessage} characters or less`, { max: maxMessage }));
+                    valid = false;
+                } else {
+                    clearError(messageInput, 'message');
+                }
+
+                if (!valid) return;
+
+                // Prepare payload for future endpoint
+                const payload = {
+                    name: nameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    company: companyInput.value.trim(),
+                    message: msg,
+                    lang: localStorage.getItem('site_lang') || document.documentElement.getAttribute('lang') || 'en',
+                    timestamp: new Date().toISOString(),
+                    source: 'editessolutions.com/contact'
+                };
+
+                console.log('Contact payload ready:', payload);
+                // Simulated send: replace with real fetch when endpoint exists
+                const simulateFailure = false; // set true to test error branch
+                if (!simulateFailure) {
+                    showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                    // Clear form after successful validation
+                    form.reset();
+                    [nameInput, emailInput, companyInput, messageInput].forEach(input => input.classList.remove('invalid'));
+                    Object.values(errors).forEach(el => { if (el) el.textContent = ''; });
+                    updateCounter();
+                } else {
+                    showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                }
+
+                // Example for future endpoint
+                // try {
+                //   const res = await fetch('/api/contact', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(payload)
+                //   });
+                //   if (!res.ok) throw new Error('Network response was not ok');
+                //   showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                //   form.reset(); updateCounter();
+                // } catch (err) {
+                //   showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                // }
+            });
+        })();
 
         // Add fade-in animation to elements when they come into view
         const observerOptions = {
