@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edites Solutions</title>
+    <link rel="icon" type="image/png" href="images/PNG/webpage-logo.png">
+    <link rel="shortcut icon" type="image/png" href="images/PNG/webpage-logo.png">
+    <link rel="apple-touch-icon" href="images/PNG/webpage-logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding-top: var(--header-height);
+        }
+
+        :root {
+            --container-max: 1200px;
+            --header-height: 72px;
+            --page-side-pad: 1rem;
+        }
+
+        body.no-scroll { overflow: hidden; }
+
+        html { scroll-behavior: smooth; }
+
+        section { scroll-margin-top: calc(var(--header-height) + 16px); }
+
+        /* Header */
+        header {
+            background: black;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--page-side-pad);
+            min-height: var(--header-height);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ffd43b;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.45rem 0.6rem;
+            border-radius: 999px;
+            cursor: pointer;
+            line-height: 0;
+        }
+
+        .mobile-menu-btn i { font-size: 1rem; }
+
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .language-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            min-width: 180px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px) scale(0.98);
+            transform-origin: top right;
+            transition: opacity 0.14s ease, transform 0.14s ease;
+            overflow: hidden;
+        }
+
+        .language-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-option {
+            padding: 0.75rem 0.875rem;
+            color: #111827;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            transition: background 0.15s ease;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover { background: #f3f4f6; }
+
+        .language-option.active { background: #eef2ff; color: #3730a3; }
+
+        .cta-button {
+            background: white;
+            color: #333;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: #ffd43b;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/PNG/Edites-178.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 64px 0 80px;
+            text-align: left;
+        }
+
+        .hero-content {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--page-side-pad);
+        }
+
+        .hero h1 {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #333;
+            padding: 1rem 2rem;
+            border: 1px solid #333;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--page-side-pad);
+        }
+        
+
+        .section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.6rem, 5.5vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-header .arrow {
+            color: #ccc;
+            font-size: 1.5rem;
+        }
+
+        .services-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .services-text {
+            max-width: 500px;
+        }
+
+        .services-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .learn-more {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .learn-more .arrow-circle {
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .services-pills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .pill {
+            background: #f0f0f0;
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .pill:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: clamp(220px, 40vw, 350px);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .product-image.quantum-leap {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/SiruomWABI.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.circuit-master {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/protec-w-logo.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.code-weaver {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/Respi-w-logo.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.codetosoft {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/codding.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        
+        .product-image.winery {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/placa.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.startup {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/startups.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.market {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/market.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.dolly {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/dolly.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.plastic {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/plastic.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.matriz {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/matriz.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.tracker {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/track1.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-image.industry {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/industry.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+
+
+        /* Products Carousel (shadcn-like) */
+        .products-carousel {
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .carousel-viewport {
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scroll-padding-left: 0;
+            padding-bottom: 10px;
+        }
+
+        .carousel-track::-webkit-scrollbar { display: none; }
+
+        .products-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(260px, 1fr));
+            gap: 2rem;
+            padding: 0 0.5rem;
+            opacity: 1;
+        }
+
+        .products-slide.active { opacity: 1; }
+
+        .carousel-nav {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .carousel-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: #667eea;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .carousel-arrow.prev {
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        .carousel-arrow.next {
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+
+        .product-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+        }
+
+        .product-content h3 {
+            font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .product-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 10px;
+            margin-top: auto;
+        }
+
+        .sector-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: #ebe4e4b3;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            text-align: right;
+            pointer-events: none;
+        }
+
+        /* Hide Get it buttons per request */
+        .buy-btn { display: none !important; }
+
+        /* Desktop: stabilize card height to prevent jump between slides */
+        @media (min-width: 993px) {
+            .product-card { min-height: 520px; }
+        }
+
+        .sector-badge em {
+            color: #6d7182;
+            font-size: 0.9rem;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #ffd43b;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .testimonial-role {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        /* Simple Logo Carousel (after Trusted By) */
+        .logo-carousel { padding: 16px 0 8px; }
+        .logo-carousel-viewport { overflow: hidden; }
+        .logo-carousel-row { 
+            display: flex; 
+            gap: 24px; 
+            justify-content: center; 
+            align-items: center; 
+            transition: opacity 0.25s ease; 
+        }
+        .logo-carousel-row.fade-out { opacity: 0; }
+        .logo-item {
+            width: var(--logo-max-width, 200px);
+            height: var(--logo-max-height, 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-item img { 
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            filter: grayscale(100%); 
+            opacity: 0.9; 
+        }
+        @media (max-width: 768px) {
+            .logo-carousel-row { gap: 16px; }
+            .logo-item { height: var(--logo-max-height, 72px); width: var(--logo-max-width, 160px); }
+        }
+
+        /* Contact Form */
+        .contact {
+            padding: 80px 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .error-text { color: #b00020; font-size: 0.9rem; margin-top: 0.4rem; min-height: 1em; }
+        .invalid { border-color: #b00020 !important; background-color: #fff7f7; }
+        .form-status { margin-bottom: 1rem; font-size: 0.95rem; }
+        .form-status.success { color: #065f46; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.75rem; border-radius: 6px; }
+        .form-status.error { color: #b00020; background: #fff1f2; border: 1px solid #fecdd3; padding: 0.75rem; border-radius: 6px; }
+        .char-counter { text-align: right; font-size: 0.85rem; color: #666; margin-top: 0.25rem; }
+        .char-counter.over { color: #b00020; }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 16px;
+            transform: translate(-50%, 120%);
+            background: #111827; /* default, overridden by variants */
+            color: #ffffff;
+            padding: 0.9rem 1.2rem;
+            border-radius: 999px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            z-index: 2000;
+            pointer-events: none;
+            font-size: 0.95rem;
+        }
+        .toast.show { transform: translate(-50%, 0); opacity: 1; }
+        .toast.success { background: #059669; box-shadow: 0 10px 25px rgba(5,150,105,0.35); }
+        .toast.error { background: #dc2626; box-shadow: 0 10px 25px rgba(220,38,38,0.35); }
+
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd43b;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #ffba3b;
+        }
+        .product-description { margin-bottom: 1rem; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .services-content { grid-template-columns: 1fr; }
+            .services-pills { grid-template-columns: repeat(2, 1fr); }
+            .products-slide { grid-template-columns: 1fr; }
+            .carousel-arrow.prev { left: 0; }
+            .carousel-arrow.next { right: 0; }
+            .mobile-menu-btn { display: inline-flex; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero { text-align: center; }
+            .hero p { max-width: 100%; margin-left: auto; margin-right: auto; }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .services-grid,
+            .products-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-slide { grid-template-columns: 1fr; }
+            .carousel-arrow { display: none; }
+
+            /* About: video first, full width; center text */
+            .about-content { display: flex; flex-direction: column; gap: 1.25rem; }
+            .video-container { order: -1; width: 100%; margin: 0 auto; }
+            .about-text { text-align: center; }
+            .about-text p { text-align: center; }
+
+            /* Reduce vertical whitespace across sections */
+            .about-us,
+            .services,
+            .products,
+            .stats,
+            .testimonials,
+            .contact { padding: 40px 0; }
+
+            /* Stack section headers and remove right arrow in mobile */
+            .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; text-align: left; margin-bottom: 1.5rem; }
+            .section-header .arrow { display: none; }
+
+            /* Center the learn-more link */
+            .learn-more { justify-content: center; }
+
+            /* Footer: stack and center */
+            footer .footer-content { grid-template-columns: 1fr; text-align: center; }
+            footer .footer-section { align-items: center; }
+            footer .footer-section a, 
+            footer .footer-section p { margin-left: auto; margin-right: auto; }
+            footer .footer-section img { display: block; margin: 0 auto; }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            :root { 
+                --header-height: 60px; 
+                --page-side-pad: 0.75rem;
+            }
+            .hero { padding: 56px 0 56px; }
+            .hero-content { padding: 0 var(--page-side-pad); }
+            .btn-primary, .btn-secondary { padding: 0.9rem 1.25rem; }
+            .hero-buttons a { width: 100%; justify-content: center; }
+            .services-pills { grid-template-columns: 1fr; }
+            .about-text h2 { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+            .container { padding: 0 var(--page-side-pad); }
+
+            /* Contact header: stack title then subtitle */
+            #contact .section-header { flex-direction: column; align-items: flex-start; text-align: left; gap: 0.5rem; }
+            #contact .section-header p { margin: 0; }
+        }
+
+        /* Mobile nav overlay */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 900;
+        }
+        .menu-overlay.show { opacity: 1; pointer-events: auto; }
+
+        /* Mobile nav drawer */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #111;
+                flex-direction: column;
+                gap: 1.25rem;
+                padding: 1.5rem;
+                z-index: 1001;
+                transform: translateY(-8px);
+            }
+            .nav-links.open { display: flex; transform: translateY(0); }
+            .nav-links a { font-size: 1.1rem; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="images/PNG/header.png" alt="Edites Solutions Logo" onclick="scrollToTop()" style="cursor: pointer;">
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="primary-nav">
+                <li><a href="#about" data-i18n="nav.about">About Us</a></li>
+                <li><a href="#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="#products" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="header-right">
+                <div class="language-selector">
+                    <button class="language-btn" id="lang-toggle" aria-haspopup="true" aria-expanded="false" onclick="toggleLanguageDropdown()">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                        <span id="current-language">EN</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="language-dropdown" id="language-dropdown" role="menu" aria-labelledby="lang-toggle">
+                        <a href="#" class="language-option active" role="menuitemradio" aria-checked="true" onclick="changeLanguage('en', this); return false;">
+                            English <span>EN</span>
+                        </a>
+                        <a href="#" class="language-option" role="menuitemradio" aria-checked="false" onclick="changeLanguage('es', this); return false;">
+                            Español <span>ES</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="menu-overlay" id="menu-overlay"></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up">
+            <h1 data-i18n="hero.kicker">Future Forward</h1>
+            <h2 data-i18n="hero.title">Engineering Your Tomorrow</h2>
+            <p data-i18n="hero.subtitle">We build the brains and brawn for your next big idea. From circuits to code, we make it happen.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary"><span data-i18n="hero.ctaPrimary">Start Now</span> <i class="fas fa-arrow-right"></i></a>
+                <a href="#services" class="btn-secondary" data-i18n="hero.ctaSecondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-us">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 data-i18n="about.title">About Edites Solutions</h2>
+                    <!-- 
+                    <p>We are a passionate team of engineers and innovators dedicated to creating cutting-edge solutions that drive the future of technology. From software development to hardware design, we bring your ideas to life with precision and creativity.</p>
+                    <p>Our mission is to bridge the gap between imagination and implementation, delivering solutions that not only meet your needs but exceed your expectations. With years of experience in the tech industry, we understand what it takes to build successful, scalable, and innovative products.</p>
+                -->
+                    <p data-i18n="about.p1"> We are a passionate team of engineers and innovators transforming bold ideas into cutting-edge solutions. From revolutionary medical products to global engineering services, we combine precision, creativity, and technical excellence to design projects that make a lasting impact.</p>
+                    <p data-i18n-html="about.p2_html"> Our story began with Siruom...</p>
+                    <p data-i18n="about.p3"> Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.</p>
+                   
+                    <a  data-i18n-html="about.p2_html_link"
+                        target="_blank" class="learn-more" 
+                        style="color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;" 
+                        data-i18n="about.learnMoreSiruom">
+                        Learn More About Siruom
+                        <span class="arrow-circle" aria-hidden="true">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+                
+                </div>
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/NoPO19ed2Q8" 
+                        title="Edites Solutions - About Us"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="services.title">Smart Solutions</h2>
+                <i class="fas fa-arrow-right arrow"></i>
+            </div>
+            <div class="services-content">
+                <div class="services-text">
+                    <p data-i18n-html="services.text_html">Our mission is clear...</p>
+                    <a href="#contact" class="learn-more">
+                        <span data-i18n="services.contact">Contact Us</span>
+                        <div class="arrow-circle">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="services-pills">
+                    <div class="pill" data-i18n="pills.software">Software</div>
+                    <div class="pill" data-i18n="pills.hardware">Hardware</div>
+                    <div class="pill" data-i18n="pills.medical">Medical Devices</div>
+                    <div class="pill" data-i18n="pills.consulting">Engineering Consulting</div>
+                    <div class="pill" data-i18n="pills.startup">Startup Consulting</div>
+                    <div class="pill" data-i18n="pills.electronics">Electronics</div>
+                    <div class="pill" data-i18n="pills.ai">AI</div>
+                    <div class="pill" data-i18n="pills.iot">IoT</div>
+                    <div class="pill" data-i18n="pills.robotics">Robotics</div>
+                    <div class="pill" data-i18n="pills.electric">Electric Mobility</div>
+                    <div class="pill" data-i18n="pills.research">Market Research</div>
+                    <div class="pill" data-i18n="pills.special">Special Developments</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="products.title">Our Creations</h2>
+                <p data-i18n="products.subtitle">Innovative solutions that drive results</p>
+            </div>
+            <div class="products-carousel">
+                <button class="carousel-arrow prev" onclick="carouselPrev()" aria-label="Previous slide">‹</button>
+                <div class="carousel-viewport" id="products-viewport">
+                    <div class="carousel-track" id="products-track">
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image quantum-leap"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product1.title">Siruom WABI</h3>
+                                    <p data-i18n="product1.desc">We create Siruom, a cutting-edge omnidirectional wheelchair, offering advanced mobility, comfort, and innovative technology to improve quality of life.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image circuit-master"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product2.title">Siruom Protect</h3>
+                                    <p data-i18n="product2.desc">We developed an autonomous disinfection system for intensive care units, ensuring sterile and safe environments with advanced technology.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image code-weaver"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product3.title">Neumoc-1000TI</h3>
+                                    <p data-i18n="product3.desc">We manufactured an intensive care ventilator, strengthening the medical response with advanced technology during the COVID-19 pandemic.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.medical">Medical Devices</span></em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image codetosoft"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product4.title">Custom Industrial Software</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product4.desc">We develop software with databases, advanced analytics, and visualization screens, optimizing management and monitoring in industries.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Software</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image winery"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product5.title">IoT Automation in Winery</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product5.desc">We implemented an IoT system to automate pumps in wine production at a premium winery located in Patagonia, optimizing processes and improving product quality.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: IoT</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image market"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product6.title">Electric Vehicle Market Study</h3>
+                                    <p data-i18n="product6.desc">We conducted a comprehensive analysis for a Spanish company, evaluating the market, competition, legislation, and policies in Latin America, promoting its expansion strategy.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Market Research</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image startup"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product7.title">Consulting for Startups</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product7.desc">We provide comprehensive evaluation, strategic roadmaps, business plans, and investment decks, driving the growth and financing of innovative startups in different sectors.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Startup consulting</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image dolly"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product8.title">Electric Dolly for Production</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product8.desc">We manufacture an electric dolly to optimize production line feeding, improving efficiency and fluidity in industrial processes.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Hardware</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image plastic"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product9.title">Special Thermoformed Parts</h3>
+                                    <p data-i18n="product9.desc">We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em>Sector: Hardware</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="products-slide">
+                            <div class="product-card">
+                                <div class="product-image matriz"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product10.title">Jigs and Dies for Production</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product10.desc">We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: Hardware</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image tracker"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product11.title">IoT Thermography and Geopositioning System</h3>
+                                    <div class="product-description">
+                                        <p data-i18n="product11.desc">We developed an IoT online thermography and geopositioning system for refrigerated food transportation, replacing offline solutions. It includes custom software for integration, real-time monitoring and detailed report generation.</p>
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                    <div class="sector-badge">
+                                        <em>Sector: IoT</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image industry"></div>
+                                <div class="product-content">
+                                    <h3 data-i18n="product12.title">Industrial Automation with PLC</h3>
+                                    <p data-i18n="product12.desc">We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.</p>
+                                    <div class="product-actions">
+                                        <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
+                                        <div class="sector-badge">
+                                            <em><span data-i18n="sector.label">Sector: </span><span data-i18n="sector.automation">Automation</span></em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-arrow next" onclick="carouselNext()" aria-label="Next slide">›</button>
+                <div class="carousel-nav"></div>
+            </div>
+        </div>
+    </section>    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>+14</h3>
+                    <p data-i18n="stats.years">Years of experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+100</h3>
+                    <p data-i18n="stats.projects">Projects</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+30</h3>
+                    <p data-i18n="stats.awards">Innovation awards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+                <div class="section-header">
+                <h2 data-i18n="testimonials.title">Trusted By</h2>
+                <p data-i18n="testimonials.subtitle">Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.</p>
+            </div>
+            <!-- Logo Carousel below the header -->
+            <div class="logo-carousel">
+                <div class="logo-carousel-viewport">
+                    <div class="logo-carousel-row" id="logo-carousel-row"></div>
+                </div>
+                <div id="logo-carousel-source" aria-hidden="true" style="display:none;">
+                    <img src="images/PNG/a1toyo.png" alt="Toyota">
+                    <img src="images/PNG/a2profertil.png" alt="Profertil">
+                    <img src="images/PNG/a3invap.png" alt="INVAP">
+                    <img src="images/PNG/a4fleni.png" alt="FLENI">
+                    <img src="images/PNG/a5karsan.png" alt="KARSAN">  
+                    <img src="images/PNG/a6adimra.png" alt="ADIMRA">
+                    <img src="images/PNG/a7came.png" alt="CAME">
+                    <img src="images/PNG/a8trafigura.png" alt="Trafigura">
+                    <img src="images/PNG/a9mbb.png" alt="Municipio de Bahía Blanca">
+                    <img src="images/PNG/a10puertobb.png" alt="Puerto Bahía Blanca">
+                    <img src="images/PNG/a11amcham.png" alt="AmCham">
+                    <img src="images/PNG/a12chacra.jpg" alt="La Chacra">
+                    <img src="images/PNG/a13fundacioninvap.png" alt="Fundación INVAP">
+                    <img src="images/PNG/a15cice.png" alt="CICE">
+                    <img src="images/PNG/a16israel.png" alt="Embajada de Israel">
+                    <img src="images/PNG/a17libic.jpg" alt="LIBIC">
+                    <img src="images/PNG/a14100k.png" alt="100K Latam">
+                </div>
+            </div>
+            <!-- <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "These guys turned our clunky software into a sleek, efficient beast. Seriously impressive work!"
+                    </div>
+                    <div class="testimonial-author">Alex Johnson</div>
+                    <div class="testimonial-role">CTO</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Their hardware design was exactly what we needed. Fast, reliable, and surprisingly affordable."
+                    </div>
+                    <div class="testimonial-author">Maria Garcia</div>
+                    <div class="testimonial-role">Lead Engineer</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Our consulting engagement was a lifesaver. They identified issues we never saw and provided clear solutions."
+                    </div>
+                    <div class="testimonial-author">Ben Carter</div>
+                    <div class="testimonial-role">Project Manager</div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="contact.title">Let's Build Something Awesome</h2>
+                <p data-i18n="contact.subtitle">Ready to start your next project? Get in touch with us today.</p>
+            </div>
+            <form class="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="name" data-i18n="contact.name">Your Name</label>
+                    <input type="text" id="name" name="name" required data-i18n-placeholder="contact.name" placeholder="Your Name">
+                    <small class="error-text" id="error-name"></small>
+                </div>
+                <div class="form-group">
+                    <label for="email" data-i18n="contact.email">Your Email</label>
+                    <input type="email" id="email" name="email" required data-i18n-placeholder="contact.email" placeholder="Your Email">
+                    <small class="error-text" id="error-email"></small>
+                </div>
+                <div class="form-group">
+                    <label for="company" data-i18n="contact.company">Company Name</label>
+                    <input type="text" id="company" name="company" required data-i18n-placeholder="contact.company" placeholder="Company Name">
+                    <small class="error-text" id="error-company"></small>
+                </div>
+                <div class="form-group">
+                    <label for="message" data-i18n="contact.message">Message</label>
+                    <textarea id="message" name="message" rows="5" required maxlength="500" data-i18n-placeholder="contact.message" placeholder="Message"></textarea>
+                    <div class="char-counter" id="message-counter">0/500</div>
+                    <small class="error-text" id="error-message"></small>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="contact.submit">Send It!</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-i18n="footer.place">Our Lair</h3>
+                    <p>Colegio Nacional 540, Villa Regina</p>
+                    <p>Argentina, 8000</p>
+                    <p></p>
+                    <p>Antonia Ruiz Soro 6, Madrid</p>
+                    <p>Spain, 28028</p>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer.phone">The Batphone</h3>
+                    <p>+54 (298) 4747469</p>
+                    <p>whatsapp: +34 647463152</p>
+                    <p>admin@editessolutions.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer.services">Services</h3>
+                    <a href="#services">Software Development</a>
+                    <a href="#services">Hardware Design</a>
+                    <a href="#services">Consulting</a>
+                    <a href="#services">Electronics</a>
+                </div>
+
+                <div class="footer-section" style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            ">
+                    <img src= "images/PNG/logo.png" alt="Logotipo de la empresa" style="width:100px; height:auto;" style="filter: drop-shadow(0 0 20px white);">
+                </div>
+
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Edites Solutions. All rights reserved. We're probably watching you.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+    // Inline translations to work without a server (file://). Fetch will be used only as a fallback.
+    window.TRANSLATIONS = {
+      "en": {
+        "nav.about": "About Us",
+        "nav.services": "Services",
+        "nav.projects": "Projects",
+        "nav.contact": "Contact",
+        "hero.kicker": "Future Forward",
+        "hero.title": "Engineering Your Tomorrow",
+        "hero.subtitle": "We build the brains and brawn for your next big idea. From circuits to code, we make it happen.",
+        "hero.ctaPrimary": "Start Now",
+        "hero.ctaSecondary": "Learn More",
+        "about.title": "About Edites Solutions",
+        "about.p1": "We are a passionate team of engineers and innovators transforming bold ideas into cutting-edge solutions. From revolutionary medical products to global engineering services, we combine precision, creativity, and technical excellence to design projects that make a lasting impact.",
+        "about.p2_html": "Our story began with <a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, a wheelchair internationally recognized as one of the most innovative in its category. That achievement led us, in 2019, to earn the support of Toyota Motor Corporation. With their backing, we redesigned <a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, optimized our processes, built a new factory, and adopted the Kaizen philosophy. We merged this discipline of continuous improvement with rigorous medical-grade quality standards to deliver excellence in every project.",
+        "about.p2_html_link": "<a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Learn More About Siruom</a>",
+        "about.p3": "Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.",
+        "about.learnMoreSiruom": "Learn More About Siruom",
+        "services.title": "Smart Solutions",
+        "services.text_html": "Our mission is clear: to bridge the gap between imagination and reality, delivering solutions that exceed expectations and create real value.<br/><br/>We craft custom software, design killer hardware, and offer consulting focused on real outcomes. Clear. Effective. Impactful.",
+        "services.contact": "Contact Us",
+        "pills.software": "Software",
+        "pills.hardware": "Hardware",
+        "pills.medical": "Medical Devices",
+        "pills.consulting": "Engineering Consulting",
+        "pills.startup": "Startup Consulting",
+        "pills.electronics": "Electronics",
+        "pills.ai": "AI",
+        "pills.iot": "IoT",
+        "pills.robotics": "Robotics",
+        "pills.electric": "Electric Mobility",
+        "pills.research": "Market Research",
+        "pills.special": "Special Developments",
+        "products.title": "Our Creations",
+        "products.subtitle": "Innovative solutions that drive results",
+        "product1.title": "Siruom WABI",
+        "product1.desc": "We create Siruom, a cutting-edge omnidirectional wheelchair, offering advanced mobility, comfort, and innovative technology to improve quality of life.",
+        "product2.title": "Siruom Protect",
+        "product2.desc": "We developed an autonomous disinfection system for intensive care units, ensuring sterile and safe environments with advanced technology.",
+        "product3.title": "Neumoc-1000TI",
+        "product3.desc": "We manufactured an intensive care ventilator, strengthening the medical response with advanced technology during the COVID-19 pandemic.",
+        "product4.title": "Custom Industrial Software",
+        "product4.desc": "We develop software with databases, advanced analytics, and visualization screens, optimizing management and monitoring in industries.",
+        "product5.title": "IoT Automation in Winery",
+        "product5.desc": "We implemented an IoT system to automate pumps in wine production at a premium winery located in Patagonia, optimizing processes and improving product quality.",
+        "product6.title": "Electric Vehicle Market Study",
+        "product6.desc": "We conducted a comprehensive analysis for a Spanish company, evaluating the market, competition, legislation, and policies in Latin America, promoting its expansion strategy.",
+        "product7.title": "Consulting for Startups",
+        "product7.desc": "We provide comprehensive evaluation, strategic roadmaps, business plans, and investment decks, driving the growth and financing of innovative startups in different sectors.",
+        "product8.title": "Electric Dolly for Production",
+        "product8.desc": "We manufacture an electric dolly to optimize production line feeding, improving efficiency and fluidity in industrial processes.",
+        "product9.title": "Special Thermoformed Parts",
+        "product9.desc": "We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.",
+        "product10.title": "Jigs and Dies for Production",
+        "product10.desc": "We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.",
+        "product11.title": "IoT Thermography and Geopositioning System",
+        "product11.desc": "We developed an IoT online thermography and geopositioning system for refrigerated food transportation, replacing offline solutions. It includes custom software for integration, real-time monitoring and detailed report generation.",
+        "product12.title": "Industrial Automation with PLC",
+        "product12.desc": "We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.",
+        "stats.years": "Years of experience",
+        "stats.projects": "Projects",
+        "stats.awards": "Innovation awards",
+        "testimonials.title": "Trusted By",
+        "testimonials.subtitle": "Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.",
+        "contact.title": "Let's Build Something Awesome",
+        "contact.subtitle": "Ready to start your next project? Get in touch with us today.",
+        "contact.name": "Your Name",
+        "contact.email": "Your Email",
+        "contact.company": "Company Name",
+        "contact.message": "Message",
+        "contact.submit": "Send It!",
+        "footer.place": "Our Lair",
+        "footer.phone": "The Batphone",
+        "footer.services": "Services",
+        "common.getIt": "Get it",
+        "sector.label": "Sector: ",
+        "sector.medical": "Medical Devices",
+        "sector.software": "Software",
+        "sector.iot": "IoT",
+        "sector.research": "Market Research",
+        "sector.startup": "Startup consulting",
+        "sector.hardware": "Hardware",
+        "sector.automation": "Automation",
+        "errors.name.required": "Please enter your name",
+        "errors.email.required": "Please enter your email",
+        "errors.email.invalid": "Please enter a valid email",
+        "errors.company.required": "Please enter your company",
+        "errors.message.required": "Please enter a message",
+        "errors.message.max": "Message must be {max} characters or less",
+        "success.sent": "Message sent, we will contact you soon",
+        "errors.sendFailed": "Failed to send, please try again later",
+        "counter.format": "{count}/{max}"
+      },
+      "es": {
+        "nav.about": "Sobre nosotros",
+        "nav.services": "Servicios",
+        "nav.projects": "Proyectos",
+        "nav.contact": "Contacto",
+        "hero.kicker": "Hacia el futuro",
+        "hero.title": "Ingeniería para tu mañana",
+        "hero.subtitle": "Construimos el cerebro y la fuerza de tu próxima gran idea. Desde circuitos hasta código, lo hacemos realidad.",
+        "hero.ctaPrimary": "Comenzar",
+        "hero.ctaSecondary": "Conocer más",
+        "about.title": "Sobre Edites Solutions",
+        "about.p1": "Somos un equipo apasionado de ingenieros e innovadores que transformamos ideas audaces en soluciones de vanguardia. Desde productos médicos revolucionarios hasta servicios de ingeniería globales, combinamos precisión, creatividad y excelencia técnica para diseñar proyectos con impacto real.",
+        "about.p2_html": "Nuestra historia comenzó con <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, una silla de ruedas reconocida internacionalmente como una de las más innovadoras de su categoría. Ese logro nos permitió, en 2019, contar con el apoyo de Toyota Motor Corporation. Con su respaldo, rediseñamos <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, optimizamos procesos, construimos una nueva fábrica y adoptamos la filosofía Kaizen. Integramos esta disciplina de mejora continua con estándares de calidad de grado médico para entregar excelencia en cada proyecto.",
+        "about.p2_html_link": " <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Conoce más sobre Siruom</a>",
+       "about.p3": "Hoy, Edites Solutions va más allá de la innovación médica. Brindamos diseño de hardware, desarrollo de software y consultoría especializada—siempre con foco en la innovación, la calidad y tus resultados.",
+        "about.learnMoreSiruom": "Conoce más sobre Siruom",
+        "services.title": "Soluciones inteligentes",
+        "services.text_html": "Nuestra misión es clara: cerrar la brecha entre la imaginación y la realidad, entregando soluciones que superen expectativas y generen valor real.<br/><br/>Desarrollamos software a medida, diseñamos hardware de alto impacto y ofrecemos consultoría orientada a resultados. Claro. Efectivo. Contundente.",
+        "services.contact": "Contáctanos",
+        "pills.software": "Software",
+        "pills.hardware": "Hardware",
+        "pills.medical": "Dispositivos médicos",
+        "pills.consulting": "Consultoría de ingeniería",
+        "pills.startup": "Consultoría para startups",
+        "pills.electronics": "Electrónica",
+        "pills.ai": "IA",
+        "pills.iot": "IoT",
+        "pills.robotics": "Robótica",
+        "pills.electric": "Movilidad eléctrica",
+        "pills.research": "Investigación de mercado",
+        "pills.special": "Desarrollos especiales",
+        "products.title": "Nuestras Creaciones",
+        "products.subtitle": "Soluciones innovadoras que impulsan resultados",
+        "product1.title": "Siruom WABI",
+        "product1.desc": "Creamos Siruom, una silla de ruedas omnidireccional de vanguardia que ofrece movilidad avanzada, confort y tecnología innovadora para mejorar la calidad de vida.",
+        "product2.title": "Siruom Protect",
+        "product2.desc": "Desarrollamos un sistema autónomo de desinfección para unidades de terapia intensiva, garantizando entornos estériles y seguros con tecnología avanzada.",
+        "product3.title": "Neumoc-1000TI",
+        "product3.desc": "Fabricamos un ventilador de cuidados intensivos, fortaleciendo la respuesta médica con tecnología avanzada durante la pandemia de COVID-19.",
+        "product4.title": "Software industrial a medida",
+        "product4.desc": "Desarrollamos software con bases de datos, analítica avanzada y pantallas de visualización, optimizando la gestión y el monitoreo en industrias.",
+        "product5.title": "Automatización IoT en bodega",
+        "product5.desc": "Implementamos un sistema IoT para automatizar bombas en la producción de vino en una bodega premium de la Patagonia, optimizando procesos y mejorando la calidad del producto.",
+        "product6.title": "Estudio de mercado de vehículos eléctricos",
+        "product6.desc": "Realizamos un análisis integral para una empresa española, evaluando mercado, competencia, legislación y políticas en Latinoamérica, impulsando su estrategia de expansión.",
+        "product7.title": "Consultoría para startups",
+        "product7.desc": "Brindamos evaluación integral, hojas de ruta estratégicas, planes de negocio y decks de inversión, impulsando el crecimiento y financiamiento de startups innovadoras en distintos sectores.",
+        "product8.title": "Carro eléctrico para producción",
+        "product8.desc": "Fabricamos un carro eléctrico para optimizar la alimentación de líneas de producción, mejorando la eficiencia y fluidez en procesos industriales.",
+        "product9.title": "Piezas termoformadas especiales",
+        "product9.desc": "Diseñamos y fabricamos matrices para piezas termoformadas especiales, ofreciendo soluciones personalizadas y de alta precisión para diversas aplicaciones industriales.",
+        "product10.title": "Útiles y matrices para producción",
+        "product10.desc": "Desarrollamos plantillas y útiles de armado a medida para optimizar la precisión y eficiencia en procesos de producción industrial.",
+        "product11.title": "Sistema IoT de Termografía y Geoposición",
+        "product11.desc": "Desarrollamos un sistema IoT de termografía y geoposición online para transporte de alimentos refrigerados, reemplazando soluciones offline. Incluye software a medida para integración, monitoreo en tiempo real y generación de informes detallados.",
+        "product12.title": "Automatización industrial con PLC",
+        "product12.desc": "Diseñamos y programamos sistemas de automatización basados en PLC, integrando hardware y software para optimizar procesos industriales con precisión y alta eficiencia.",
+        "stats.years": "Años de experiencia",
+        "stats.projects": "Proyectos",
+        "stats.awards": "Premios a la innovación",
+        "testimonials.title": "Confían en nosotros",
+        "testimonials.subtitle": "No lo decimos solo nosotros. Conoce a quienes ayudamos a superar sus desafíos tecnológicos.",
+        "contact.title": "Construyamos algo increíble",
+        "contact.subtitle": "¿Listo para comenzar tu próximo proyecto? Escríbenos hoy.",
+        "contact.name": "Tu nombre",
+        "contact.email": "Tu correo",
+        "contact.company": "Nombre de la empresa",
+        "contact.message": "Mensaje",
+        "contact.submit": "Enviar",
+        "footer.place": "Nuestras sedes",
+        "footer.phone": "Teléfonos",
+        "footer.services": "Servicios",
+        "common.getIt": "Obtener",
+        "sector.label": "Sector: ",
+        "sector.medical": "Dispositivos médicos",
+        "sector.software": "Software",
+        "sector.iot": "IoT",
+        "sector.research": "Investigación de mercado",
+        "sector.startup": "Consultoría para startups",
+        "sector.hardware": "Hardware",
+        "sector.automation": "Automatización",
+        "errors.name.required": "Por favor, ingresa tu nombre",
+        "errors.email.required": "Por favor, ingresa tu correo",
+        "errors.email.invalid": "Por favor, ingresa un correo válido",
+        "errors.company.required": "Por favor, ingresa el nombre de la empresa",
+        "errors.message.required": "Por favor, ingresa un mensaje",
+        "errors.message.max": "El mensaje debe tener {max} caracteres o menos",
+        "success.sent": "Mensaje enviado, nos contactaremos pronto",
+        "errors.sendFailed": "No se pudo enviar, por favor vuelve a intentarlo más tarde",
+        "counter.format": "{count} de {max}"
+      }
+    };
+    </script>
+
+    <script>
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Language selector functionality
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            const toggleBtn = document.getElementById('lang-toggle');
+            const willShow = !dropdown.classList.contains('show');
+            dropdown.classList.toggle('show');
+            toggleBtn.setAttribute('aria-expanded', String(willShow));
+        }
+
+        async function loadTranslations(lang) {
+            // Use inline first (works on file://), try fetch as a refresh fallback
+            if (window.TRANSLATIONS && window.TRANSLATIONS[lang]) {
+                return window.TRANSLATIONS[lang];
+            }
+            try {
+                const res = await fetch('./lang/translations.json');
+                const all = await res.json();
+                window.TRANSLATIONS = all;
+                return all[lang];
+            } catch (e) {
+                console.warn('Translations fetch failed, using inline if available.', e);
+                return window.TRANSLATIONS ? window.TRANSLATIONS[lang] : null;
+            }
+        }
+
+        function applyTranslations(dict) {
+            if (!dict) return;
+            // Helper: set only the text node, preserve child elements (icons, spans, etc.)
+            function setElementTextPreserveChildren(el, text) {
+                const firstTextNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+                if (firstTextNode) {
+                    firstTextNode.textContent = text;
+                } else {
+                    el.insertBefore(document.createTextNode(text), el.firstChild);
+                }
+            }
+
+            function applyAnchorHtmlFromKey(anchorEl, htmlString) {
+                if (!htmlString || anchorEl.tagName !== 'A') return;
+                const tpl = document.createElement('template');
+                tpl.innerHTML = String(htmlString).trim();
+                const newA = tpl.content.querySelector('a');
+                if (!newA) return;
+                // Apply href/target/rel
+                if (newA.hasAttribute('href')) anchorEl.setAttribute('href', newA.getAttribute('href'));
+                if (newA.hasAttribute('target')) anchorEl.setAttribute('target', newA.getAttribute('target'));
+                if (newA.hasAttribute('rel')) anchorEl.setAttribute('rel', newA.getAttribute('rel'));
+                if (newA.hasAttribute('style')) anchorEl.setAttribute('style', newA.getAttribute('style'));
+                // Build label from full template text (phrase + link text), preserve children (icons)
+                const fullText = (tpl.content.textContent || '').trim();
+                setElementTextPreserveChildren(anchorEl, fullText);
+            }
+
+            // Text content
+            document.querySelectorAll('[data-i18n]').forEach(node => {
+                // If element also defines data-i18n-html, skip here (will be handled by HTML pass)
+                if (node.hasAttribute('data-i18n-html')) return;
+                const key = node.getAttribute('data-i18n');
+                if (dict[key] != null) setElementTextPreserveChildren(node, String(dict[key]));
+            });
+            
+            // InnerHTML (safe curated keys only)
+            document.querySelectorAll('[data-i18n-html]').forEach(node => {
+                const key = node.getAttribute('data-i18n-html');
+                if (dict[key] == null) return;
+                // Special-case anchors: set attributes and label instead of nested HTML
+                if (node.tagName === 'A') {
+                    applyAnchorHtmlFromKey(node, dict[key]);
+                } else {
+                    node.innerHTML = String(dict[key]);
+                }
+            });
+            
+            // Placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (dict[key] != null) el.setAttribute('placeholder', String(dict[key]));
+            });
+        }
+
+        async function changeLanguage(lang, el) {
+            const currentLang = document.getElementById('current-language');
+            const options = document.querySelectorAll('.language-option');
+            
+            // Update current language display
+            currentLang.textContent = lang.toUpperCase();
+            document.documentElement.setAttribute('lang', lang);
+            
+            // Update active state
+            options.forEach(option => {
+                option.classList.remove('active');
+                option.setAttribute('aria-checked', 'false');
+            });
+            if (el) { el.classList.add('active'); el.setAttribute('aria-checked', 'true'); }
+            
+            // Close dropdown
+            document.getElementById('language-dropdown').classList.remove('show');
+            
+            // Load and apply translations
+            try {
+                const dict = await loadTranslations(lang);
+                applyTranslations(dict);
+                localStorage.setItem('site_lang', lang);
+            } catch (e) {
+                console.error('Failed to load translations', e);
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const languageSelector = document.querySelector('.language-selector');
+            const dropdown = document.getElementById('language-dropdown');
+            const toggleBtn = document.getElementById('lang-toggle');
+            if (!languageSelector.contains(event.target)) {
+                dropdown.classList.remove('show');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+                // Close mobile nav after navigation
+                closeMobileNav();
+            });
+        });
+
+        // Simple toast
+        let __toastTimer;
+        function showToast(message, variant = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.remove('success', 'error');
+            toast.classList.add(variant);
+            toast.classList.add('show');
+            clearTimeout(__toastTimer);
+            __toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Form validation and submission prep
+        (function initContactForm() {
+            const form = document.querySelector('.contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const companyInput = document.getElementById('company');
+            const messageInput = document.getElementById('message');
+            const maxMessage = Number(messageInput.getAttribute('maxlength')) || 500;
+
+            const errors = {
+                name: document.getElementById('error-name'),
+                email: document.getElementById('error-email'),
+                company: document.getElementById('error-company'),
+                message: document.getElementById('error-message')
+            };
+
+            const i18n = (key, fallback, vars) => {
+                const lang = localStorage.getItem('site_lang') || 'en';
+                let str = window.TRANSLATIONS?.[lang]?.[key] || fallback || '';
+                if (vars && typeof str === 'string') {
+                    Object.entries(vars).forEach(([k, v]) => {
+                        str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+                    });
+                }
+                return str;
+            };
+
+            function setError(input, key, msgFallback) {
+                input.classList.add('invalid');
+                if (errors[key]) errors[key].textContent = msgFallback;
+            }
+            function clearError(input, key) {
+                input.classList.remove('invalid');
+                if (errors[key]) errors[key].textContent = '';
+            }
+            function isValidEmail(value) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            }
+
+            // Live character counter
+            const counter = document.getElementById('message-counter');
+            function updateCounter() {
+                const len = messageInput.value.length;
+                counter.textContent = `${len}/${maxMessage}`;
+                counter.classList.toggle('over', len > maxMessage);
+            }
+            messageInput.addEventListener('input', updateCounter);
+            updateCounter();
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let valid = true;
+
+                // Name
+                if (!nameInput.value.trim()) {
+                    setError(nameInput, 'name', i18n('errors.name.required', 'Please enter your name'));
+                    valid = false;
+                } else {
+                    clearError(nameInput, 'name');
+                }
+
+                // Email
+                if (!emailInput.value.trim()) {
+                    setError(emailInput, 'email', i18n('errors.email.required', 'Please enter your email'));
+                    valid = false;
+                } else if (!isValidEmail(emailInput.value.trim())) {
+                    setError(emailInput, 'email', i18n('errors.email.invalid', 'Please enter a valid email'));
+                    valid = false;
+                } else {
+                    clearError(emailInput, 'email');
+                }
+
+                // Company
+                if (!companyInput.value.trim()) {
+                    setError(companyInput, 'company', i18n('errors.company.required', 'Please enter your company'));
+                    valid = false;
+                } else {
+                    clearError(companyInput, 'company');
+                }
+
+                // Message
+                const msg = messageInput.value.trim();
+                if (!msg) {
+                    setError(messageInput, 'message', i18n('errors.message.required', 'Please enter a message'));
+                    valid = false;
+                } else if (msg.length > maxMessage) {
+                    setError(messageInput, 'message', i18n('errors.message.max', `Message must be ${maxMessage} characters or less`, { max: maxMessage }));
+                    valid = false;
+                } else {
+                    clearError(messageInput, 'message');
+                }
+
+                if (!valid) return;
+
+                // Prepare payload for future endpoint
+                const payload = {
+                    name: nameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    company: companyInput.value.trim(),
+                    message: msg,
+                    lang: localStorage.getItem('site_lang') || document.documentElement.getAttribute('lang') || 'en',
+                    timestamp: new Date().toISOString(),
+                    source: 'editessolutions.com/contact'
+                };
+
+                console.log('Contact payload ready:', payload);
+                // Simulated send: replace with real fetch when endpoint exists
+                const simulateFailure = false; // set true to test error branch
+                if (!simulateFailure) {
+                    showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                    // Clear form after successful validation
+                    form.reset();
+                    [nameInput, emailInput, companyInput, messageInput].forEach(input => input.classList.remove('invalid'));
+                    Object.values(errors).forEach(el => { if (el) el.textContent = ''; });
+                    updateCounter();
+                } else {
+                    showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                }
+
+                // Example for future endpoint
+                // try {
+                //   const res = await fetch('/api/contact', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(payload)
+                //   });
+                //   if (!res.ok) throw new Error('Network response was not ok');
+                //   showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                //   form.reset(); updateCounter();
+                // } catch (err) {
+                //   showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                // }
+            });
+        })();
+
+        // Add fade-in animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all service cards, product cards, and testimonial cards
+        document.querySelectorAll('.service-card, .product-card, .testimonial-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Products Carousel (shadcn-like) functionality
+        const productsTrack = document.getElementById('products-track');
+        const productsViewport = document.getElementById('products-viewport');
+        const slides = Array.from(document.querySelectorAll('.products-slide'));
+        const carouselNav = document.querySelector('.products-carousel .carousel-nav');
+        let currentIndex = 0;
+
+        function updateDots() {
+            if (!carouselNav) return;
+            carouselNav.innerHTML = slides
+                .map((_, i) => `<span class="carousel-dot${i === currentIndex ? ' active' : ''}" data-index="${i}"></span>`)
+                .join('');
+            carouselNav.querySelectorAll('.carousel-dot').forEach(dot => {
+                dot.addEventListener('click', () => goToSlide(Number(dot.dataset.index)));
+            });
+        }
+
+        function goToSlide(index) {
+            if (index === slides.length) document.getElementsByClassName('carousel-arrow next').style.display = 'none';
+            if (index === 0) document.getElementsByClassName('carousel-arrow prev').style.display = 'none'; 
+            if (index >= slides.length || index < 0) return;
+            currentIndex = index;
+            const viewportWidth = productsViewport.clientWidth;
+            productsTrack.scrollTo({ left: viewportWidth * currentIndex, behavior: 'smooth' });
+            updateDots();
+        }
+
+        function carouselNext() { goToSlide(currentIndex + 1); }
+        function carouselPrev() { goToSlide(currentIndex - 1); }
+
+        // Sync index on manual scroll (snap)
+        productsTrack?.addEventListener('scroll', () => {
+            const viewportWidth = productsViewport.clientWidth;
+            const newIndex = Math.round(productsTrack.scrollLeft / viewportWidth);
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                updateDots();
+            }
+        }, { passive: true });
+
+        // Recompute on resize
+        window.addEventListener('resize', () => goToSlide(currentIndex));
+
+        // Init
+        updateDots();
+
+        // Logo carousel (3 logos every 3 seconds)
+        (function initLogoCarousel() {
+            const srcImgs = Array.from(document.querySelectorAll('#logo-carousel-source img'));
+            const data = srcImgs.map(img => ({ src: img.getAttribute('src'), alt: img.getAttribute('alt') || '' }));
+            if (!data.length) return;
+            const row = document.getElementById('logo-carousel-row');
+            let index = 0;
+
+            function setMaxLogoHeight() {
+                const card = document.querySelector('.testimonial-card');
+                const h = card ? Math.max(60, Math.min(140, card.offsetHeight)) : 100;
+                document.documentElement.style.setProperty('--logo-max-height', `${h}px`);
+            }
+
+            function renderNext() {
+                if (!row) return;
+                row.classList.add('fade-out');
+                setTimeout(() => {
+                    row.innerHTML = '';
+                    for (let i = 0; i < 3; i++) {
+                        const item = data[(index + i) % data.length];
+                        const wrap = document.createElement('div');
+                        wrap.className = 'logo-item';
+                        const img = document.createElement('img');
+                        img.src = item.src;
+                        img.alt = item.alt;
+                        wrap.appendChild(img);
+                        row.appendChild(wrap);
+                    }
+                    row.classList.remove('fade-out');
+                }, 150);
+                index = (index + 3) % data.length;
+            }
+
+            setMaxLogoHeight();
+            window.addEventListener('resize', setMaxLogoHeight);
+            renderNext();
+            setInterval(renderNext, 3000);
+        })();
+
+        // Language: set initial language from storage or default 'en'
+        (async function initLang() {
+            const saved = localStorage.getItem('site_lang') || 'en';
+            const currentBtn = Array.from(document.querySelectorAll('.language-option'))
+              .find(a => a.textContent.toLowerCase().includes(saved)) || null;
+            await changeLanguage(saved, currentBtn);
+        })();
+
+        // Mobile nav controls
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const nav = document.getElementById('primary-nav');
+        const overlay = document.getElementById('menu-overlay');
+
+        function openMobileNav() {
+            nav.classList.add('open');
+            overlay.classList.add('show');
+            document.body.classList.add('no-scroll');
+            mobileBtn.setAttribute('aria-label', 'Close menu');
+            mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        function closeMobileNav() {
+            nav.classList.remove('open');
+            overlay.classList.remove('show');
+            document.body.classList.remove('no-scroll');
+            mobileBtn.setAttribute('aria-label', 'Open menu');
+            mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        function toggleMobileNav() {
+            if (nav.classList.contains('open')) closeMobileNav(); else openMobileNav();
+        }
+
+        mobileBtn?.addEventListener('click', toggleMobileNav);
+        overlay?.addEventListener('click', closeMobileNav);
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+    </script>
+</body>
+</html> 
