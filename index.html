@@ -492,7 +492,6 @@
             background-position: center;
         }
 
-<<<<<<< HEAD
         .product-image.matriz {
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/PNG/matriz.jpeg');
             background-size: cover;
@@ -513,8 +512,6 @@
 
 
 
-=======
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
         /* Products Carousel (shadcn-like) */
         .products-carousel {
             position: relative;
@@ -1280,11 +1277,7 @@
                         </div>
                         <div class="products-slide">
                             <div class="product-card">
-<<<<<<< HEAD
                                 <div class="product-image matriz"></div>
-=======
-                                <div class="product-image quantum-leap"></div>
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
                                 <div class="product-content">
                                     <h3 data-i18n="product10.title">Jigs and Dies for Production</h3>
                                     <div class="product-description">
@@ -1299,38 +1292,22 @@
                                 </div>
                             </div>
                             <div class="product-card">
-<<<<<<< HEAD
                                 <div class="product-image tracker"></div>
                                 <div class="product-content">
                                     <h3 data-i18n="product11.title">IoT Thermography and Geopositioning System</h3>
                                     <div class="product-description">
                                         <p data-i18n="product11.desc">We developed an IoT online thermography and geopositioning system for refrigerated food transportation, replacing offline solutions. It includes custom software for integration, real-time monitoring and detailed report generation.</p>
-=======
-                                <div class="product-image quantum-leap"></div>
-                                <div class="product-content">
-                                    <h3 data-i18n="product11.title">Disinfection System - Petrochemical Industry</h3>
-                                    <div class="product-description">
-                                        <p data-i18n="product11.desc">We designed and manufactured a specialized disinfection system for a petrochemical company, ensuring safety and efficiency in its industrial processes.</p>
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
                                     </div>
                                 </div>
                                 <div class="product-actions">
                                     <a href="#contact" class="buy-btn" data-i18n="common.getIt">Get it</a>
                                     <div class="sector-badge">
-<<<<<<< HEAD
                                         <em>Sector: IoT</em>
-=======
-                                        <em>Sector: Hardware</em>
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
                                     </div>
                                 </div>
                             </div>
                             <div class="product-card">
-<<<<<<< HEAD
                                 <div class="product-image industry"></div>
-=======
-                                <div class="product-image code-weaver"></div>
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
                                 <div class="product-content">
                                     <h3 data-i18n="product12.title">Industrial Automation with PLC</h3>
                                     <p data-i18n="product12.desc">We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.</p>
@@ -1561,13 +1538,8 @@
         "product9.desc": "We design and manufacture dies for special thermoformed parts, offering customized, high-precision solutions for a variety of industrial applications.",
         "product10.title": "Jigs and Dies for Production",
         "product10.desc": "We develop custom templates and assembly dies to optimize precision and efficiency in industrial production processes.",
-<<<<<<< HEAD
-        "product11.title": "IoT Thermography and Geopositioning System",
-        "product11.desc": "We developed an IoT online thermography and geopositioning system for refrigerated food transportation, replacing offline solutions. It includes custom software for integration, real-time monitoring and detailed report generation.",
-=======
-        "product11.title": "Disinfection System - Petrochemical Industry",
-        "product11.desc": "We designed and manufactured a specialized disinfection system for a petrochemical company, ensuring safety and efficiency in its industrial processes.",
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
+        "product11.title": "Thermography and Geopositioning System",
+        "product11.desc": "We developed a data tracking system for transport, replacing offline solutions. It includes custom software for integration, real-time monitoring, and detailed reporting.",
         "product12.title": "Industrial Automation with PLC",
         "product12.desc": "We design and program PLC-based automation systems, integrating hardware and software to optimize industrial processes in various sectors with precision and high efficiency.",
         "stats.years": "Years of experience",
@@ -1657,13 +1629,8 @@
         "product9.desc": "Diseñamos y fabricamos matrices para piezas termoformadas especiales, ofreciendo soluciones personalizadas y de alta precisión para diversas aplicaciones industriales.",
         "product10.title": "Útiles y matrices para producción",
         "product10.desc": "Desarrollamos plantillas y útiles de armado a medida para optimizar la precisión y eficiencia en procesos de producción industrial.",
-<<<<<<< HEAD
-        "product11.title": "Sistema IoT de Termografía y Geoposición",
-        "product11.desc": "Desarrollamos un sistema IoT de termografía y geoposición online para transporte de alimentos refrigerados, reemplazando soluciones offline. Incluye software a medida para integración, monitoreo en tiempo real y generación de informes detallados.",
-=======
-        "product11.title": "Sistema de desinfección – Industria petroquímica",
-        "product11.desc": "Diseñamos y fabricamos un sistema de desinfección especializado para una empresa petroquímica, garantizando seguridad y eficiencia en sus procesos industriales.",
->>>>>>> 0ce2c417cc71f228e64766d2fe977daa8bee4493
+        "product11.title": "Sistema de Termografía y Geoposición",
+        "product11.desc": "Desarrollamos un sistema de seguimiento de datos para transportes, reemplazando soluciones offline. Incluye software a medida para integración, monitoreo en tiempo real y generación de informes detallados.",
         "product12.title": "Automatización industrial con PLC",
         "product12.desc": "Diseñamos y programamos sistemas de automatización basados en PLC, integrando hardware y software para optimizar procesos industriales con precisión y alta eficiencia.",
         "stats.years": "Años de experiencia",
@@ -2034,7 +2001,7 @@
 
         function goToSlide(index) {
             if (index === slides.length) document.getElementsByClassName('carousel-arrow next').style.display = 'none';
-            if (index === 0) document.getElementsByClassName('carousel-arrow prev').style.display = 'none'; 
+            if (index === 0 - 1) document.getElementsByClassName('carousel-arrow prev').style.display = 'none'; 
             if (index >= slides.length || index < 0) return;
             currentIndex = index;
             const viewportWidth = productsViewport.clientWidth;
