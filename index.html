@@ -828,20 +828,21 @@
         .toast.error { background: #dc2626; box-shadow: 0 10px 25px rgba(220,38,38,0.35); }
 
         .submit-btn {
-            background: #667eea;
-            color: white;
-            padding: 1rem 2rem;
+            background: #ffd43b;
+            color: #111;
+            padding: 0.85rem 1.5rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 10px;
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.2s, transform 0.15s ease;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.15);
         }
 
-        .submit-btn:hover {
-            background: #5a6fd8;
-        }
+        .submit-btn:hover { background: #ffba3b; transform: translateY(-1px); }
+        .submit-btn:active { transform: translateY(0); }
+        .form-actions { display: flex; justify-content: flex-end; }
 
         /* Footer */
         footer {
@@ -873,6 +874,10 @@
         .footer-section a:hover {
             color: #ffba3b;
         }
+        .footer-section .social-links { display: flex; gap: 12px; margin-top: 0.5rem; }
+        .footer-section .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #ccc; transition: background 0.2s, color 0.2s; }
+        .footer-section .social-links a:hover { background: rgba(255, 212, 59, 0.15); color: #ffba3b; }
+        .footer-section .social-links i { font-size: 1.1rem; }
         .product-description { margin-bottom: 1rem; }
 
         .footer-bottom {
@@ -1433,7 +1438,9 @@
                     <div class="char-counter" id="message-counter">0/500</div>
                     <small class="error-text" id="error-message"></small>
                 </div>
-                <button type="submit" class="submit-btn" data-i18n="contact.submit">Send It!</button>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" data-i18n="contact.submit">Send It!</button>
+                </div>
             </form>
         </div>
     </section>
@@ -1455,6 +1462,10 @@
                     <p>+54 (298) 4747469</p>
                     <p>whatsapp: +34 647463152</p>
                     <p>admin@editessolutions.com</p>
+                    <div class="social-links" aria-label="social links">
+                        <a href="https://ar.linkedin.com/company/edites-solutions" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/editessolutions/?hl=es" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3 data-i18n="footer.services">Services</h3>
@@ -1988,6 +1999,15 @@
         const slides = Array.from(document.querySelectorAll('.products-slide'));
         const carouselNav = document.querySelector('.products-carousel .carousel-nav');
         let currentIndex = 0;
+        const prevArrow = document.querySelector('.products-carousel .carousel-arrow.prev');
+        const nextArrow = document.querySelector('.products-carousel .carousel-arrow.next');
+
+        function updateArrows() {
+            if (!prevArrow || !nextArrow) return;
+            // Use visibility so mobile CSS display: none remains in effect
+            prevArrow.style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+            nextArrow.style.visibility = (currentIndex === slides.length - 1) ? 'hidden' : 'visible';
+        }
 
         function updateDots() {
             if (!carouselNav) return;
@@ -2000,17 +2020,22 @@
         }
 
         function goToSlide(index) {
-            if (index === slides.length) document.getElementsByClassName('carousel-arrow next').style.display = 'none';
-            if (index === 0 - 1) document.getElementsByClassName('carousel-arrow prev').style.display = 'none'; 
             if (index >= slides.length || index < 0) return;
             currentIndex = index;
             const viewportWidth = productsViewport.clientWidth;
             productsTrack.scrollTo({ left: viewportWidth * currentIndex, behavior: 'smooth' });
             updateDots();
+            updateArrows();
         }
 
-        function carouselNext() { goToSlide(currentIndex + 1); }
-        function carouselPrev() { goToSlide(currentIndex - 1); }
+        function carouselNext() { 
+            goToSlide(currentIndex + 1);
+            restartProductsAutoAdvance();
+        }
+        function carouselPrev() { 
+            goToSlide(currentIndex - 1);
+            restartProductsAutoAdvance();
+        }
 
         // Sync index on manual scroll (snap)
         productsTrack?.addEventListener('scroll', () => {
@@ -2019,14 +2044,51 @@
             if (newIndex !== currentIndex) {
                 currentIndex = newIndex;
                 updateDots();
+                updateArrows();
             }
         }, { passive: true });
 
         // Recompute on resize
         window.addEventListener('resize', () => goToSlide(currentIndex));
 
+        // Auto-advance every 10 seconds (bounce between ends)
+        let productsAutoInterval = null;
+        let autoDirection = 1; // 1: forward, -1: backward
+        function startProductsAutoAdvance() {
+            if (productsAutoInterval) clearInterval(productsAutoInterval);
+            if (slides.length <= 1) return; // nothing to advance
+            productsAutoInterval = setInterval(() => {
+                if (currentIndex === slides.length - 1) autoDirection = -1;
+                else if (currentIndex === 0) autoDirection = 1;
+                const nextIndex = currentIndex + autoDirection;
+                goToSlide(nextIndex);
+            }, 10000);
+        }
+        function stopProductsAutoAdvance() {
+            if (productsAutoInterval) {
+                clearInterval(productsAutoInterval);
+                productsAutoInterval = null;
+            }
+        }
+
+        function restartProductsAutoAdvance() {
+            // Stop current timer and start a fresh one only if not hovered
+            stopProductsAutoAdvance();
+            const section = document.getElementById('products');
+            if (!section || !section.matches(':hover')) {
+                startProductsAutoAdvance();
+            }
+        }
+
         // Init
         updateDots();
+        updateArrows();
+        startProductsAutoAdvance();
+
+        // Pause auto-advance on hover over products section
+        const productsSection = document.getElementById('products');
+        productsSection?.addEventListener('mouseenter', stopProductsAutoAdvance);
+        productsSection?.addEventListener('mouseleave', startProductsAutoAdvance);
 
         // Logo carousel (3 logos every 3 seconds)
         (function initLogoCarousel() {
