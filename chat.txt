@@ -1,0 +1,87 @@
+You
+11:08 PM
+sudo ufw allow 'Nginx Full'
+Hover over a message to pin it
+keep
+sudo ufw allow ssh
+   sudo ufw --force enable
+Mauro Tronelli
+11:11 PM
+172-26-3-154}
+172-26-3-154}
+You
+11:13 PM
+scp -i /path/to/lightsail-key.pem index.html ubuntu@YOUR-INSTANCE-IP:/tmp/
+   scp -r -i /path/to/lightsail-key.pem images ubuntu@YOUR-INSTANCE-IP:/tmp/
+Mauro Tronelli
+11:15 PM
+index.html
+C:\Repos\edites-solutions-landing-main\index.html
+Mauro Tronelli
+11:20 PM
+LightsailDefaultKey-us-east-1.pem
+Mauro Tronelli
+11:22 PM
+44.204.243.42
+You
+11:23 PM
+scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem C:/Repos/edites-solutions-landing-main/index.html ubuntu@44.204.243.42:/tmp/
+You
+11:27 PM
+scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem -r C:/Repos/edites-solutions-landing-main/images ubuntu@44.204.243.42:/tmp/
+You
+11:30 PM
+sudo cp /tmp/index.html /var/www/html/
+   sudo cp -r /tmp/images /var/www/html/
+   sudo chown -R www-data:www-data /var/www/html/
+   sudo chmod -R 755 /var/www/html/
+You
+11:32 PM
+sudo nano /etc/nginx/sites-available/edites-solution
+You
+11:34 PM
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name editessolutions.com www.editessolutions.com;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Gzip
+    gzip on;
+    gzip_types text/css application/javascript text/javascript application/json;
+
+    # Cache de estáticos
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|webp|woff|woff2)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+You
+11:36 PM
+sudo ln -s /etc/nginx/sites-available/edites-solution /etc/nginx/sites-enabled/
+   sudo rm /etc/nginx/sites-enabled/default
+   sudo nginx -t
+   sudo systemctl reload nginx
+sudo ln -s /etc/nginx/sites-available/edites-solution /etc/nginx/sites-enabled/
+Mauro Tronelli
+11:44 PM
+98.85.143.82
+You
+11:54 PM
+sudo apt install snapd
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+You
+11:59 PM
+sudo certbot --nginx -d editessolutions.com -d www.editessolutions.com
+You
+12:02 AM
+sudo systemctl restart nginx
