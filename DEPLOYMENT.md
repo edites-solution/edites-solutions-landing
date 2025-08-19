@@ -53,8 +53,8 @@ Internet → Route 53 → Lightsail (Static Website) → API Gateway → Lambda 
 
 ```bash
 # Check if DNS is working (after propagation)
-nslookup your-domain.com
-dig your-domain.com
+nslookup editessolutions.com
+dig editessolutions.com
 ```
 
 ---
@@ -83,7 +83,7 @@ dig your-domain.com
    sudo systemctl enable nginx
    ```
 
-3. **Configure firewall**:
+3. **Configure firewall** (commands used during deployment):
    ```bash
    sudo ufw allow 'Nginx Full'
    sudo ufw allow ssh
@@ -92,16 +92,22 @@ dig your-domain.com
 
 ### Step 3: Deploy Website Files
 
-1. **Upload files** using Lightsail file manager or SCP:
-   ```bash
-   # From your local machine
-   scp -i /path/to/lightsail-key.pem index.html ubuntu@YOUR-INSTANCE-IP:/tmp/
-   scp -r -i /path/to/lightsail-key.pem images ubuntu@YOUR-INSTANCE-IP:/tmp/
+1. **Upload files** using SCP from Windows (actual commands used):
+   ```powershell
+   # From PowerShell in C:\Repos\edites-solutions-landing-main\
+   scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem index.html ubuntu@44.204.243.42:/tmp/
+   scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem -r images ubuntu@44.204.243.42:/tmp/
    ```
 
-2. **Move files to web directory**:
+   **Key file location**: `C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem`
+   **Local files**: `C:\Repos\edites-solutions-landing-main\`
+
+2. **Move files to web directory** (actual commands used):
    ```bash
-   # On the Lightsail instance
+   # SSH into the Lightsail instance first:
+   ssh -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem ubuntu@44.204.243.42
+   
+   # Then move files (commands executed during deployment):
    sudo cp /tmp/index.html /var/www/html/
    sudo cp -r /tmp/images /var/www/html/
    sudo chown -R www-data:www-data /var/www/html/
@@ -113,40 +119,42 @@ dig your-domain.com
    sudo nano /etc/nginx/sites-available/edites-solution
    ```
 
-   Add this configuration:
+   **Actual Nginx configuration used during deployment**:
    ```nginx
    server {
        listen 80;
        listen [::]:80;
-       
-       server_name your-domain.com www.your-domain.com;
-       
+
+       server_name editessolutions.com www.editessolutions.com;
+
        root /var/www/html;
        index index.html;
-       
+
        location / {
            try_files $uri $uri/ =404;
        }
-       
-       # Enable gzip compression
+
+       # Gzip
        gzip on;
        gzip_types text/css application/javascript text/javascript application/json;
-       
-       # Cache static assets
-       location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+
+       # Cache de estáticos
+       location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|webp|woff|woff2)$ {
            expires 1y;
            add_header Cache-Control "public, immutable";
        }
    }
    ```
 
-4. **Enable the site**:
+4. **Enable the site** (actual commands used during deployment):
    ```bash
    sudo ln -s /etc/nginx/sites-available/edites-solution /etc/nginx/sites-enabled/
    sudo rm /etc/nginx/sites-enabled/default
    sudo nginx -t
    sudo systemctl reload nginx
    ```
+   
+   **Note**: The commands were executed in this exact order during deployment.
 
 ### Step 4: Create Static IP
 
@@ -154,7 +162,7 @@ dig your-domain.com
    - Go to "Networking" tab
    - Click "Create static IP"
    - Attach to your instance
-   - Note the static IP address
+   - **Your static IP**: `44.204.243.42`
 
 ---
 
@@ -169,41 +177,57 @@ dig your-domain.com
    **A Record for root domain**:
    - Name: (leave blank)
    - Type: A
-   - Value: Your Lightsail static IP
+   - Value: `44.204.243.42`
    - TTL: 300
 
    **A Record for www subdomain**:
    - Name: www
    - Type: A  
-   - Value: Your Lightsail static IP
+   - Value: `44.204.243.42`
    - TTL: 300
 
 ### Step 2: Test Domain Access
 
 ```bash
 # Wait 5-10 minutes then test
-curl -I http://your-domain.com
-curl -I http://www.your-domain.com
+curl -I http://editessolutions.com
+curl -I http://www.editessolutions.com
+
+# Should resolve to 44.204.243.42
+nslookup editessolutions.com
+nslookup www.editessolutions.com
 ```
+
+### Step 3: Verify External Access
+
+During deployment, external IP `98.85.143.82` was used to test domain access.
+This confirms the website is accessible from outside the Lightsail network.
 
 ---
 
 ## 🔒 Part 4: SSL Certificate (HTTPS)
 
-### Step 1: Install Certbot
+### Step 1: Install Certbot (actual commands used during deployment)
 
 ```bash
-# On Lightsail instance
+# Commands executed on Lightsail instance
 sudo apt install snapd
 sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
-### Step 2: Get SSL Certificate
+### Step 2: Get SSL Certificate (actual command used)
 
 ```bash
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+# Command executed during deployment
+sudo certbot --nginx -d editessolutions.com -d www.editessolutions.com
+```
+
+**Additional step taken during deployment**:
+```bash
+# Nginx was restarted after SSL configuration
+sudo systemctl restart nginx
 ```
 
 Follow the prompts:
@@ -238,8 +262,8 @@ sam deploy --guided
 **Guided deployment parameters**:
 - Stack name: `edites-contact-form`
 - AWS Region: `us-east-1` (or your preferred)
-- Parameter NotificationEmail: `your-email@domain.com`
-- Parameter FromEmail: `noreply@your-domain.com`
+- Parameter NotificationEmail: `mauro@editessolutions.com`
+- Parameter FromEmail: `noreply@editessolutions.com`
 - Confirm changes: Y
 - Allow SAM to create IAM roles: Y
 - Save parameters to config file: Y
@@ -257,13 +281,48 @@ https://abc123def4.execute-api.us-east-1.amazonaws.com/Prod/contact
 2. **Navigate to "Verified identities"**
 3. **Create identity**:
    - Identity type: Email address
-   - Email: `noreply@your-domain.com`
+   - Email: `noreply@editessolutions.com`
    - Click "Create identity"
 4. **Check email and verify**
 
 ---
 
-## 🔧 Part 6: Configure Frontend for Production
+## 📁 Part 6: Upload Website Files from Windows
+
+### Your File Locations
+- **Local files**: `C:\Repos\edites-solutions-landing-main\`
+- **SSH Key**: `C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem`
+- **Lightsail IP**: `44.204.243.42`
+
+### Upload Commands (PowerShell)
+
+```powershell
+# Navigate to your project directory
+cd "C:\Repos\edites-solutions-landing-main"
+
+# Upload index.html
+scp -i "C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem" index.html ubuntu@44.204.243.42:/tmp/
+
+# Upload images folder
+scp -i "C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem" -r images ubuntu@44.204.243.42:/tmp/
+```
+
+### Move Files on Server
+
+```bash
+# SSH into the server
+ssh -i "C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem" ubuntu@44.204.243.42
+
+# Move files to web directory
+sudo cp /tmp/index.html /var/www/html/
+sudo cp -r /tmp/images /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
+```
+
+---
+
+## 🔧 Part 7: Configure Frontend for Production
 
 ### Step 1: Update Contact Form Configuration
 
@@ -290,18 +349,18 @@ Update the meta tags with your actual domain:
 
 ```html
 <!-- Around lines 14-30 -->
-<meta property="og:url" content="https://your-domain.com/">
-<meta property="twitter:url" content="https://your-domain.com/">
-<link rel="canonical" href="https://your-domain.com/">
+<meta property="og:url" content="https://editessolutions.com/">
+<meta property="twitter:url" content="https://editessolutions.com/">
+<link rel="canonical" href="https://editessolutions.com/">
 ```
 
 And structured data:
 
 ```javascript
 // Around line 47
-"url": "https://your-domain.com",
-"logo": "https://your-domain.com/images/PNG/logo.png",
-"image": "https://your-domain.com/images/PNG/header.png",
+"url": "https://editessolutions.com",
+"logo": "https://editessolutions.com/images/PNG/logo.png",
+"image": "https://editessolutions.com/images/PNG/header.png",
 ```
 
 ### Step 3: Restart Nginx
@@ -315,9 +374,9 @@ sudo systemctl reload nginx
 ## 🧪 Part 7: Testing Everything
 
 ### Website Access
-- ✅ `http://your-domain.com` (should redirect to HTTPS)
-- ✅ `https://your-domain.com` (should work)
-- ✅ `https://www.your-domain.com` (should work)
+- ✅ `http://editessolutions.com` (should redirect to HTTPS)
+- ✅ `https://editessolutions.com` (should work)
+- ✅ `https://www.editessolutions.com` (should work)
 
 ### Contact Form
 1. **Fill out contact form** on your website
@@ -327,8 +386,8 @@ sudo systemctl reload nginx
 ### Performance Tests
 ```bash
 # Test from command line
-curl -I https://your-domain.com
-curl -w "@-" -o /dev/null -s https://your-domain.com <<< "
+curl -I https://editessolutions.com
+curl -w "@-" -o /dev/null -s https://editessolutions.com <<< "
      namelookup:  %{time_namelookup}s
         connect:  %{time_connect}s
      appconnect:  %{time_appconnect}s
@@ -406,7 +465,7 @@ curl -w "@-" -o /dev/null -s https://your-domain.com <<< "
 **DNS not resolving**:
 - Check nameservers at registrar
 - Wait for DNS propagation (up to 48 hours)
-- Use `dig your-domain.com` to test
+- Use `dig editessolutions.com` to test
 
 **SSL certificate issues**:
 ```bash
@@ -446,3 +505,64 @@ Your Edites Solutions website is now fully deployed with:
 - ✅ Cost-effective infrastructure
 
 Your website is ready for business! 🚀
+
+---
+
+## 📊 Deployment Summary - Real Data Used
+
+### **Infrastructure Details**
+- **Domain**: editessolutions.com
+- **Lightsail IP**: 44.204.243.42
+- **SSH Key**: LightsailDefaultKey-us-east-1.pem
+- **External Test IP**: 98.85.143.82 (used for verification)
+
+### **File Locations (Windows)**
+- **Project Files**: `C:\Repos\edites-solutions-landing-main\`
+- **SSH Key**: `C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem`
+- **Main Files**: `index.html`, `images/` folder
+
+### **Server Configuration**
+- **Nginx Config**: `/etc/nginx/sites-available/edites-solution`
+- **Web Root**: `/var/www/html/`
+- **SSL**: Let's Encrypt via Certbot
+- **Cache**: Static assets cached for 1 year
+
+### **Email Configuration**
+- **Notifications**: `mauro@editessolutions.com`
+- **Sender**: `noreply@editessolutions.com`
+- **Region**: us-east-1
+
+### **Commands Used During Actual Deployment**
+```bash
+# Firewall
+sudo ufw allow 'Nginx Full'
+sudo ufw allow ssh
+sudo ufw --force enable
+
+# File Upload (Windows PowerShell)
+scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem index.html ubuntu@44.204.243.42:/tmp/
+scp -i C:/Users/Mauro/.ssh/LightsailDefaultKey-us-east-1.pem -r images ubuntu@44.204.243.42:/tmp/
+
+# File Movement
+sudo cp /tmp/index.html /var/www/html/
+sudo cp -r /tmp/images /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
+
+# Nginx Setup
+sudo nano /etc/nginx/sites-available/edites-solution
+sudo ln -s /etc/nginx/sites-available/edites-solution /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl reload nginx
+
+# SSL Certificate
+sudo apt install snapd
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --nginx -d editessolutions.com -d www.editessolutions.com
+sudo systemctl restart nginx
+```
+
+**This documentation now reflects the exact process and commands used during the successful deployment of editessolutions.com.**

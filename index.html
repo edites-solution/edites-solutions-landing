@@ -1582,9 +1582,9 @@
                 </div>
 
             </div>
-            <div class="footer-bottom">
+            <!-- <div class="footer-bottom">
                 <p>&copy; 2024 Edites Solutions. All rights reserved. We're probably watching you.</p>
-            </div>
+            </div> -->
         </div>
     </footer>
 
@@ -2239,6 +2239,7 @@
 
         // Auto-advance every 10 seconds (bounce between ends)
         let productsAutoInterval = null;
+        let productsAutoInitialized = false;
         let autoDirection = 1; // 1: forward, -1: backward
         function startProductsAutoAdvance() {
             if (productsAutoInterval) clearInterval(productsAutoInterval);
@@ -2248,7 +2249,7 @@
                 else if (currentIndex === 0) autoDirection = 1;
                 const nextIndex = currentIndex + autoDirection;
                 goToSlide(nextIndex);
-            }, 10000);
+            }, 3000);
         }
         function stopProductsAutoAdvance() {
             if (productsAutoInterval) {
@@ -2261,7 +2262,7 @@
             // Stop current timer and start a fresh one only if not hovered
             stopProductsAutoAdvance();
             const section = document.getElementById('products');
-            if (!section || !section.matches(':hover')) {
+            if (productsAutoInitialized && (!section || !section.matches(':hover'))) {
                 startProductsAutoAdvance();
             }
         }
@@ -2269,12 +2270,17 @@
         // Init
         updateDots();
         updateArrows();
-        startProductsAutoAdvance();
+        // Do not start auto-advance until first hover interaction
 
         // Pause auto-advance on hover over products section
         const productsSection = document.getElementById('products');
-        productsSection?.addEventListener('mouseenter', stopProductsAutoAdvance);
-        productsSection?.addEventListener('mouseleave', startProductsAutoAdvance);
+        productsSection?.addEventListener('mouseenter', () => {
+            productsAutoInitialized = true;
+            stopProductsAutoAdvance();
+        });
+        productsSection?.addEventListener('mouseleave', () => {
+            if (productsAutoInitialized) startProductsAutoAdvance();
+        });
 
         // Logo carousel (3 logos every 3 seconds)
         (function initLogoCarousel() {
@@ -2354,7 +2360,7 @@
 
     </main>
 
-    <footer role="contentinfo" style="background: #1a1a1a; color: white; padding: 2rem 1rem; text-align: center; margin-top: 4rem;">
+    <footer role="contentinfo" style="background: #1a1a1a; color: white; padding: 2rem 1rem; text-align: center;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <p>&copy; 2024 Edites Solutions. Engineering Your Tomorrow.</p>
             <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
