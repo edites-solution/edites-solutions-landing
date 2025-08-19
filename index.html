@@ -3,11 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edites Solutions</title>
+    <title>Edites Solutions - Engineering & Technology Consulting | Custom Software & Hardware</title>
+    <meta name="description" content="Edites Solutions provides custom engineering and technology consulting services. We specialize in software development, hardware design, IoT automation, industrial solutions, and startup consulting.">
+    <meta name="keywords" content="engineering consulting, technology solutions, custom software development, hardware design, IoT automation, industrial automation, PLC programming, startup consulting, Argentina">
+    <meta name="author" content="Edites Solutions">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edites-solution.com/">
+    <meta property="og:title" content="Edites Solutions - Engineering Your Tomorrow">
+    <meta property="og:description" content="We build the brains and brawn for your next big idea. From circuits to code, we make it happen. Custom engineering and technology consulting services.">
+    <meta property="og:image" content="https://edites-solution.com/images/PNG/header.png">
+    <meta property="og:site_name" content="Edites Solutions">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_AR">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://edites-solution.com/">
+    <meta property="twitter:title" content="Edites Solutions - Engineering Your Tomorrow">
+    <meta property="twitter:description" content="We build the brains and brawn for your next big idea. From circuits to code, we make it happen.">
+    <meta property="twitter:image" content="https://edites-solution.com/images/PNG/header.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://edites-solution.com/">
+    
+    <!-- Favicons -->
     <link rel="icon" type="image/png" href="images/PNG/webpage-logo.png">
     <link rel="shortcut icon" type="image/png" href="images/PNG/webpage-logo.png">
     <link rel="apple-touch-icon" href="images/PNG/webpage-logo.png">
+    
+    <!-- External Stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Edites Solutions",
+        "description": "Engineering and technology consulting company specializing in custom software development, hardware design, and industrial automation solutions.",
+        "url": "https://edites-solution.com",
+        "logo": "https://edites-solution.com/images/PNG/logo.png",
+        "image": "https://edites-solution.com/images/PNG/header.png",
+        "foundingDate": "2020",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Argentina"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "email": "info@edites-solution.com"
+        },
+        "sameAs": [
+            "https://linkedin.com/company/edites-solutions"
+        ],
+        "makesOffer": [
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Custom Software Development",
+                    "description": "Custom software solutions for industrial and commercial applications"
+                }
+            },
+            {
+                "@type": "Offer", 
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Hardware Design",
+                    "description": "Electronic hardware design and prototyping services"
+                }
+            },
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service", 
+                    "name": "IoT Automation",
+                    "description": "Internet of Things solutions for industrial automation"
+                }
+            },
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Engineering Consulting",
+                    "description": "Technology consulting and engineering services for startups and enterprises"
+                }
+            }
+        ]
+    }
+    </script>
     <style>
         * {
             margin: 0;
@@ -224,6 +312,15 @@
             margin-bottom: 2rem;
             opacity: 0.9;
             max-width: 600px;
+        }
+
+        .hero-kicker {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .hero-buttons {
@@ -1017,8 +1114,8 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav>
+    <header role="banner">
+        <nav role="navigation" aria-label="Main navigation">
             <div class="logo">
                 <img src="images/PNG/header.png" alt="Edites Solutions Logo" onclick="scrollToTop()" style="cursor: pointer;">
             </div>
@@ -1053,11 +1150,12 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content fade-in-up">
-            <h1 data-i18n="hero.kicker">Future Forward</h1>
-            <h2 data-i18n="hero.title">Engineering Your Tomorrow</h2>
-            <p data-i18n="hero.subtitle">We build the brains and brawn for your next big idea. From circuits to code, we make it happen.</p>
+    <main role="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content fade-in-up">
+                <p class="hero-kicker" data-i18n="hero.kicker">Future Forward</p>
+                <h1 id="hero-title" data-i18n="hero.title">Engineering Your Tomorrow</h1>
+                <p data-i18n="hero.subtitle">We build the brains and brawn for your next big idea. From circuits to code, we make it happen.</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-primary"><span data-i18n="hero.ctaPrimary">Start Now</span> <i class="fas fa-arrow-right"></i></a>
                 <a href="#services" class="btn-secondary" data-i18n="hero.ctaSecondary">Learn More</a>
@@ -1066,11 +1164,11 @@
     </section>
 
     <!-- About Us Section -->
-    <section id="about" class="about-us">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 data-i18n="about.title">About Edites Solutions</h2>
+        <section id="about" class="about-us" aria-labelledby="about-title">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 id="about-title" data-i18n="about.title">About Edites Solutions</h2>
                     <!-- 
                     <p>We are a passionate team of engineers and innovators dedicated to creating cutting-edge solutions that drive the future of technology. From software development to hardware design, we bring your ideas to life with precision and creativity.</p>
                     <p>Our mission is to bridge the gap between imagination and implementation, delivering solutions that not only meet your needs but exceed your expectations. With years of experience in the tech industry, we understand what it takes to build successful, scalable, and innovative products.</p>
@@ -1103,10 +1201,10 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-i18n="services.title">Smart Solutions</h2>
+        <section id="services" class="services" aria-labelledby="services-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="services-title" data-i18n="services.title">Smart Solutions</h2>
                 <i class="fas fa-arrow-right arrow"></i>
             </div>
             <div class="services-content">
@@ -1138,10 +1236,10 @@
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="products">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-i18n="products.title">Our Creations</h2>
+        <section id="products" class="products" aria-labelledby="products-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="products-title" data-i18n="products.title">Our Creations</h2>
                 <p data-i18n="products.subtitle">Innovative solutions that drive results</p>
             </div>
             <div class="products-carousel">
@@ -1352,10 +1450,10 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="container">
-                <div class="section-header">
-                <h2 data-i18n="testimonials.title">Trusted By</h2>
+        <section class="testimonials" aria-labelledby="testimonials-title">
+            <div class="container">
+                    <div class="section-header">
+                    <h2 id="testimonials-title" data-i18n="testimonials.title">Trusted By</h2>
                 <p data-i18n="testimonials.subtitle">Don't just take our word for it. Hear from the folks we've helped conquer their tech challenges.</p>
             </div>
             <!-- Logo Carousel below the header -->
@@ -1410,10 +1508,10 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-i18n="contact.title">Let's Build Something Awesome</h2>
+        <section id="contact" class="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="contact-title" data-i18n="contact.title">Let's Build Something Awesome</h2>
                 <p data-i18n="contact.subtitle">Ready to start your next project? Get in touch with us today.</p>
             </div>
             <form class="contact-form" novalidate>
@@ -2165,5 +2263,17 @@
         overlay?.addEventListener('click', closeMobileNav);
         window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
     </script>
+
+    </main>
+
+    <footer role="contentinfo" style="background: #1a1a1a; color: white; padding: 2rem 1rem; text-align: center; margin-top: 4rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <p>&copy; 2024 Edites Solutions. Engineering Your Tomorrow.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                Custom Engineering & Technology Consulting | Argentina
+            </p>
+        </div>
+    </footer>
+
 </body>
 </html> 
