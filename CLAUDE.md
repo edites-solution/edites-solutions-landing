@@ -50,3 +50,35 @@ When editing this codebase:
 ## No Build Tools
 
 This project intentionally uses no build tools, package managers, or frameworks. It's designed to be simple and self-contained for easy deployment and maintenance.
+
+## Deployment
+
+The project includes comprehensive deployment documentation:
+
+- **DEPLOYMENT.md** - Complete guide for AWS deployment using Lightsail, Route 53, and Lambda
+- **lambda/README.md** - Specific instructions for Lambda contact form deployment
+- **lambda/deploy.sh** - Automated deployment script for Lambda function
+
+### Quick Deployment Summary
+
+1. **Static Website**: Deploy to AWS Lightsail ($3.50/month)
+2. **Domain**: Configure with Route 53 ($0.50/month)
+3. **Contact Form**: AWS Lambda + API Gateway (essentially free)
+4. **SSL**: Free Let's Encrypt certificate via Certbot
+5. **Total Cost**: ~$4/month for a professional website
+
+## AWS Lambda Contact Form
+
+The project includes a complete serverless contact form implementation:
+
+- **Backend**: AWS Lambda function with SES email delivery
+- **Infrastructure**: SAM template for easy deployment
+- **Frontend**: Integrated with existing form validation
+- **Features**: Bilingual support, input validation, error handling
+
+To deploy the contact form:
+```bash
+cd lambda && ./deploy.sh
+```
+
+Then update `CONFIG.CONTACT_API_URL` in `index.html` with your API Gateway endpoint.

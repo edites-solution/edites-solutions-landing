@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Contact form Lambda function for Edites Solutions
+
+Parameters:
+  NotificationEmail:
+    Type: String
+    Description: Email address to receive contact form notifications
+    Default: mauro@editessolutions.com
+  
+  FromEmail:
+    Type: String
+    Description: Email address to send from (must be verified in SES)
+    Default: noreply@editessolutions.com
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs18.x
+
+Resources:
+  ContactFormFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: edites-contact-form
+      CodeUri: .
+      Handler: index.handler
+      Environment:
+        Variables:
+          NOTIFICATION_EMAIL: !Ref NotificationEmail
+          FROM_EMAIL: !Ref FromEmail
+      Policies:
+        - SESCrudPolicy:
+            IdentityName: !Ref FromEmail
+      Events:
+        ContactFormApi:
+          Type: Api
+          Properties:
+            Path: /contact
+            Method: post
+            Cors:
+              AllowMethods: "'POST, OPTIONS'"
+              AllowHeaders: "'Content-Type'"
+              AllowOrigin: "'*'"  # In production, replace with your domain
+
+Outputs:
+  ContactFormApi:
+    Description: "API Gateway endpoint URL for Contact Form function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/contact"
+    Export:
+      Name: ContactFormApiUrl

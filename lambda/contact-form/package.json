@@ -1,0 +1,14 @@
+{
+  "name": "edites-contact-form",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for Edites Solutions contact form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1490.0"
+  },
+  "author": "Edites Solutions",
+  "license": "MIT"
+}

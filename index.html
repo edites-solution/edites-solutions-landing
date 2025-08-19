@@ -11,23 +11,23 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://edites-solution.com/">
+    <meta property="og:url" content="https://editessolutions.com/">
     <meta property="og:title" content="Edites Solutions - Engineering Your Tomorrow">
     <meta property="og:description" content="We build the brains and brawn for your next big idea. From circuits to code, we make it happen. Custom engineering and technology consulting services.">
-    <meta property="og:image" content="https://edites-solution.com/images/PNG/header.png">
+    <meta property="og:image" content="https://editessolutions.com/images/PNG/header.png">
     <meta property="og:site_name" content="Edites Solutions">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="es_AR">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://edites-solution.com/">
+    <meta property="twitter:url" content="https://editessolutions.com/">
     <meta property="twitter:title" content="Edites Solutions - Engineering Your Tomorrow">
     <meta property="twitter:description" content="We build the brains and brawn for your next big idea. From circuits to code, we make it happen.">
-    <meta property="twitter:image" content="https://edites-solution.com/images/PNG/header.png">
+    <meta property="twitter:image" content="https://editessolutions.com/images/PNG/header.png">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://edites-solution.com/">
+    <link rel="canonical" href="https://editessolutions.com/">
     
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="images/PNG/webpage-logo.png">
@@ -44,9 +44,9 @@
         "@type": "Organization",
         "name": "Edites Solutions",
         "description": "Engineering and technology consulting company specializing in custom software development, hardware design, and industrial automation solutions.",
-        "url": "https://edites-solution.com",
-        "logo": "https://edites-solution.com/images/PNG/logo.png",
-        "image": "https://edites-solution.com/images/PNG/header.png",
+        "url": "https://editessolutions.com",
+        "logo": "https://editessolutions.com/images/PNG/logo.png",
+        "image": "https://editessolutions.com/images/PNG/header.png",
         "foundingDate": "2020",
         "address": {
             "@type": "PostalAddress",
@@ -55,7 +55,7 @@
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "email": "info@edites-solution.com"
+            "email": "mauro@editessolutions.com"
         },
         "sameAs": [
             "https://linkedin.com/company/edites-solutions"
@@ -1593,6 +1593,14 @@
 
     <script>
     // Inline translations to work without a server (file://). Fetch will be used only as a fallback.
+    // Configuration
+    const CONFIG = {
+        // Replace this URL with your deployed Lambda API Gateway endpoint
+        CONTACT_API_URL: 'https://your-api-gateway-url.execute-api.us-east-1.amazonaws.com/Prod/contact',
+        // Set to true during development to use simulation
+        USE_SIMULATION: true
+    };
+
     window.TRANSLATIONS = {
       "en": {
         "nav.about": "About Us",
@@ -1662,6 +1670,7 @@
         "contact.email": "Your Email",
         "contact.company": "Company Name",
         "contact.message": "Message",
+        "contact.sending": "Sending...",
         "contact.submit": "Send It!",
         "footer.place": "Our Lair",
         "footer.phone": "The Batphone",
@@ -1753,6 +1762,7 @@
         "contact.email": "Tu correo",
         "contact.company": "Nombre de la empresa",
         "contact.message": "Mensaje",
+        "contact.sending": "Enviando...",
         "contact.submit": "Enviar",
         "footer.place": "Nuestras sedes",
         "footer.phone": "Teléfonos",
@@ -2043,17 +2053,22 @@
                 };
 
                 console.log('Contact payload ready:', payload);
-                // Simulated send: replace with real fetch when endpoint exists
-                const simulateFailure = false; // set true to test error branch
-                if (!simulateFailure) {
-                    showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
-                    // Clear form after successful validation
-                    form.reset();
-                    [nameInput, emailInput, companyInput, messageInput].forEach(input => input.classList.remove('invalid'));
-                    Object.values(errors).forEach(el => { if (el) el.textContent = ''; });
-                    updateCounter();
+                
+                // Send to Lambda function or simulate
+                if (CONFIG.USE_SIMULATION) {
+                    // Simulated send for development/testing
+                    const simulateFailure = false; // set true to test error branch
+                    setTimeout(() => {
+                        if (!simulateFailure) {
+                            showToast(i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                            clearFormAfterSuccess();
+                        } else {
+                            showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                        }
+                    }, 1000);
                 } else {
-                    showToast(i18n('errors.sendFailed', 'Failed to send, please try again later'), 'error');
+                    // Real Lambda submission
+                    submitToLambda(payload);
                 }
 
                 // Example for future endpoint
@@ -2085,6 +2100,79 @@
                 }
             });
         }, observerOptions);
+
+        // Contact form Lambda submission
+        async function submitToLambda(payload) {
+            const submitButton = document.querySelector('.contact-form button[type="submit"]');
+            const originalText = submitButton?.textContent || '';
+            
+            try {
+                // Show loading state
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = i18n('contact.sending', 'Sending...');
+                }
+
+                const response = await fetch(CONFIG.CONTACT_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: payload.name,
+                        email: payload.email,
+                        message: `Company: ${payload.company}\n\n${payload.message}`,
+                        language: payload.lang
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showToast(result.message || i18n('success.sent', 'Message sent, we will contact you soon'), 'success');
+                    clearFormAfterSuccess();
+                } else {
+                    throw new Error(result.message || 'Failed to send message');
+                }
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showToast(
+                    error.message || i18n('errors.sendFailed', 'Failed to send, please try again later'), 
+                    'error'
+                );
+            } finally {
+                // Restore button state
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                }
+            }
+        }
+
+        // Helper function to clear form after successful submission
+        function clearFormAfterSuccess() {
+            const form = document.querySelector('.contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const companyInput = document.getElementById('company');
+            const messageInput = document.getElementById('message');
+            const errors = {
+                name: document.getElementById('error-name'),
+                email: document.getElementById('error-email'),
+                company: document.getElementById('error-company'),
+                message: document.getElementById('error-message')
+            };
+
+            form.reset();
+            [nameInput, emailInput, companyInput, messageInput].forEach(input => {
+                if (input) input.classList.remove('invalid');
+            });
+            Object.values(errors).forEach(el => { 
+                if (el) el.textContent = ''; 
+            });
+            updateCounter();
+        }
 
         // Observe all service cards, product cards, and testimonial cards
         document.querySelectorAll('.service-card, .product-card, .testimonial-card').forEach(el => {
