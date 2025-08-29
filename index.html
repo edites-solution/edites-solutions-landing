@@ -177,6 +177,26 @@
             gap: 1rem;
         }
 
+        .nav-catalog-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-catalog-btn:hover {
+            background: white;
+            color: #333;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: transparent;
@@ -432,6 +452,38 @@
             color: white;
             font-size: 0.8rem;
         }
+
+
+
+        .catalog-btn {
+            background: linear-gradient(135deg, #4c6ef5 0%, #845ef7 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(76, 110, 245, 0.3);
+            margin-top: 3rem;
+            max-width: 260px;
+        }
+
+        .catalog-btn:hover {
+            background: linear-gradient(135deg, #845ef7 0%, #4c6ef5 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 110, 245, 0.4);
+        }
+
+        .catalog-btn i {
+            font-size: 1.1rem;
+        }
+
+
 
         .services-pills {
             display: grid;
@@ -1129,6 +1181,7 @@
                 <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
             <div class="header-right">
+                <a href="#" id="nav-catalog" class="nav-catalog-btn" data-i18n="nav.catalog">Catalog</a>
                 <div class="language-selector">
                     <button class="language-btn" id="lang-toggle" aria-haspopup="true" aria-expanded="false" onclick="toggleLanguageDropdown()">
                         <i class="fas fa-globe" aria-hidden="true"></i>
@@ -1179,11 +1232,11 @@
                    
                     <a  data-i18n-html="about.p2_html_link"
                         target="_blank" class="learn-more" 
-                        style="color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;" 
-                        data-i18n="about.learnMoreSiruom">
-                        Learn More About Siruom
-                        <span class="arrow-circle" aria-hidden="true">
-                            <i class="fas fa-arrow-right"></i>
+                        style="color: #667eea; font-weight: 700; text-decoration: none; font-size: 1.1rem; padding: 0.8rem 1.5rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid #667eea; border-radius: 25px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2); transition: all 0.3s ease; display: inline-block;" 
+                        data-i18n="about.learnMoreEdites">
+                        Learn More About Edites Solutions
+                        <span class="arrow-circle" aria-hidden="true" style="background: #667eea; margin-left: 0.5rem;">
+                            <i class="fas fa-rocket" style="color: white;"></i>
                         </span>
                     </a>
                 
@@ -1215,6 +1268,10 @@
                         <div class="arrow-circle">
                             <i class="fas fa-arrow-right"></i>
                         </div>
+                    </a>
+                    <a href="#" class="catalog-btn" id="services-catalog">
+                        <span data-i18n="services.catalog">Download Catalog</span>
+                        <i class="fas fa-download"></i>
                     </a>
                 </div>
                 <div class="services-pills">
@@ -1481,29 +1538,6 @@
                     <img src="images/PNG/a14100k.png" alt="100K Latam">
                 </div>
             </div>
-            <!-- <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "These guys turned our clunky software into a sleek, efficient beast. Seriously impressive work!"
-                    </div>
-                    <div class="testimonial-author">Alex Johnson</div>
-                    <div class="testimonial-role">CTO</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Their hardware design was exactly what we needed. Fast, reliable, and surprisingly affordable."
-                    </div>
-                    <div class="testimonial-author">Maria Garcia</div>
-                    <div class="testimonial-role">Lead Engineer</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Our consulting engagement was a lifesaver. They identified issues we never saw and provided clear solutions."
-                    </div>
-                    <div class="testimonial-author">Ben Carter</div>
-                    <div class="testimonial-role">Project Manager</div>
-                </div>
-            </div> -->
         </div>
     </section>
 
@@ -1550,7 +1584,7 @@
                 <div class="footer-section">
                     <h3 data-i18n="footer.place">Our Lair</h3>
                     <p>Colegio Nacional 540, Villa Regina</p>
-                    <p>Argentina, 8000</p>
+                    <p>Argentina, 8336</p>
                     <p></p>
                     <p>Antonia Ruiz Soro 6, Madrid</p>
                     <p>Spain, 28028</p>
@@ -1607,6 +1641,7 @@
         "nav.services": "Services",
         "nav.projects": "Projects",
         "nav.contact": "Contact",
+        "nav.catalog": "Catalog",
         "hero.kicker": "Future Forward",
         "hero.title": "Engineering Your Tomorrow",
         "hero.subtitle": "We build the brains and brawn for your next big idea. From circuits to code, we make it happen.",
@@ -1617,10 +1652,11 @@
         "about.p2_html": "Our story began with <a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, a wheelchair internationally recognized as one of the most innovative in its category. That achievement led us, in 2019, to earn the support of Toyota Motor Corporation. With their backing, we redesigned <a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, optimized our processes, built a new factory, and adopted the Kaizen philosophy. We merged this discipline of continuous improvement with rigorous medical-grade quality standards to deliver excellence in every project.",
         "about.p2_html_link": "<a href=\"https://www.siruom.com/home\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Learn More About Siruom</a>",
         "about.p3": "Today, Edites Solutions goes beyond medical innovation. We provide hardware design, software development, and specialized consulting—always focused on innovation, quality, and your results.",
-        "about.learnMoreSiruom": "Learn More About Siruom",
+        "about.learnMoreEdites": "Learn More About Edites Solutions",
         "services.title": "Smart Solutions",
         "services.text_html": "Our mission is clear: to bridge the gap between imagination and reality, delivering solutions that exceed expectations and create real value.<br/><br/>We craft custom software, design killer hardware, and offer consulting focused on real outcomes. Clear. Effective. Impactful.",
         "services.contact": "Contact Us",
+        "services.catalog": "Download Catalog",
         "pills.software": "Software",
         "pills.hardware": "Hardware",
         "pills.medical": "Medical Devices",
@@ -1699,6 +1735,7 @@
         "nav.services": "Servicios",
         "nav.projects": "Proyectos",
         "nav.contact": "Contacto",
+        "nav.catalog": "Catálogo",
         "hero.kicker": "Hacia el futuro",
         "hero.title": "Ingeniería para tu mañana",
         "hero.subtitle": "Construimos el cerebro y la fuerza de tu próxima gran idea. Desde circuitos hasta código, lo hacemos realidad.",
@@ -1709,10 +1746,11 @@
         "about.p2_html": "Nuestra historia comenzó con <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, una silla de ruedas reconocida internacionalmente como una de las más innovadoras de su categoría. Ese logro nos permitió, en 2019, contar con el apoyo de Toyota Motor Corporation. Con su respaldo, rediseñamos <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Siruom</a>, optimizamos procesos, construimos una nueva fábrica y adoptamos la filosofía Kaizen. Integramos esta disciplina de mejora continua con estándares de calidad de grado médico para entregar excelencia en cada proyecto.",
         "about.p2_html_link": " <a href=\"https://www.siruom.com\" target=\"_blank\" style=\"color: rgb(0, 0, 0); font-weight: bold; text-decoration: none;\">Conoce más sobre Siruom</a>",
        "about.p3": "Hoy, Edites Solutions va más allá de la innovación médica. Brindamos diseño de hardware, desarrollo de software y consultoría especializada—siempre con foco en la innovación, la calidad y tus resultados.",
-        "about.learnMoreSiruom": "Conoce más sobre Siruom",
+        "about.learnMoreEdites": "Conoce más sobre Edites Solutions",
         "services.title": "Soluciones inteligentes",
         "services.text_html": "Nuestra misión es clara: cerrar la brecha entre la imaginación y la realidad, entregando soluciones que superen expectativas y generen valor real.<br/><br/>Desarrollamos software a medida, diseñamos hardware de alto impacto y ofrecemos consultoría orientada a resultados. Claro. Efectivo. Contundente.",
         "services.contact": "Contáctanos",
+        "services.catalog": "Descargar Catálogo",
         "pills.software": "Software",
         "pills.hardware": "Hardware",
         "pills.medical": "Dispositivos médicos",
@@ -2356,6 +2394,87 @@
         mobileBtn?.addEventListener('click', toggleMobileNav);
         overlay?.addEventListener('click', closeMobileNav);
         window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+
+
+
+    </script>
+
+<script>
+    (() => {
+      const catalogLinks = [
+        document.getElementById('nav-catalog'),
+        document.getElementById('services-catalog')
+      ].filter(Boolean);
+      
+      if (catalogLinks.length === 0) return;
+    
+      const API = "https://iu47qd72jb.execute-api.us-east-2.amazonaws.com/descargar";
+      const KEY = "edites-catalog.pdf";
+    
+      let busy = false;
+    
+      // Function to get current language
+      function getCurrentLanguage() {
+        return localStorage.getItem('site_lang') || 'en';
+      }
+    
+      // Function to get localized text
+      function getLocalizedText(key) {
+        const lang = getCurrentLanguage();
+        const texts = {
+          downloading: {
+            en: "Downloading...",
+            es: "Descargando…"
+          },
+          error: {
+            en: "There was a problem generating the download link.",
+            es: "Hubo un problema generando el link de descarga."
+          }
+        };
+        return texts[key][lang] || texts[key]['en'];
+      }
+    
+      catalogLinks.forEach(a => {
+        a.addEventListener('click', async (e) => {
+          e.preventDefault();
+          if (busy) return;
+          busy = true;
+      
+          // Store the original content including the icon
+          const originalContent = a.innerHTML;
+          const originalText = a.textContent;
+          
+          // Update only the text content, preserving the icon
+          const icon = a.querySelector('i');
+          if (icon) {
+            a.innerHTML = getLocalizedText('downloading') + icon.outerHTML;
+          } else {
+            a.textContent = getLocalizedText('downloading');
+          }
+          
+          a.setAttribute('aria-busy', 'true');
+      
+          try {
+            const r = await fetch(`${API}?key=${encodeURIComponent(KEY)}`, { method: 'GET' });
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      
+            const { url } = await r.json();
+            if (!url) throw new Error("Respuesta sin URL");
+      
+            // Redirección que dispara la descarga
+            window.location.assign(url);
+          } catch (err) {
+            console.error(err);
+            alert(getLocalizedText('error'));
+          } finally {
+            // Restore the original content including the icon
+            a.innerHTML = originalContent;
+            a.removeAttribute('aria-busy');
+            busy = false;
+          }
+        });
+      });
+    })();
     </script>
 
     </main>
